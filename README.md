@@ -5,18 +5,20 @@
 
 ## 🧩 Arrays
 
-| #   | Algorithm / Technique         | Purpose                                        |
-| --- | ----------------------------- | ---------------------------------------------- |
-| 1   | Kadane’s Algorithm            | Maximum subarray sum                           |
-| 2   | Moore’s Voting Algorithm      | Find majority element (> n/2 or > n/3)         |
-| 3   | Prefix Sum                    | Range sum queries, subarray problems           |
-| 4   | Dutch National Flag Algorithm | Sort 0s, 1s, 2s (3-way partition)              |
-| 5   | Merge Intervals Algorithm     | Overlapping intervals merge                    |
-| 6   | Cyclic Sort                   | Find missing / duplicate numbers in range 1..n |
-| 7   | Two Pointers Technique        | Pair sum, remove duplicates, move zeros        |
-| 8   | Binary Search (on array)      | Searching / min-max optimization               |
-| 9   | Rotate / Reverse Algorithm    | Array rotation, reversing sections             |
-| 10  | Prefix XOR / Prefix Min/Max   | For subarray XOR/sum-related problems          |
+| #   | Algorithm / Technique             | Purpose                                        |
+| --- | --------------------------------- | ---------------------------------------------- |
+| 1   | Kadane’s Algorithm                | Maximum subarray sum                           |
+| 2   | Moore’s Voting Algorithm          | Find majority element (element cnt > n/2)      |
+| 3   | Moore’s Voting Algorithm          | Find majority element (element cnt > n/3)      |
+| 4   | Prefix Sum                        | Range sum queries, subarray problems           |
+| 5   | Dutch National Flag Algorithm     | Sort 0s, 1s, 2s (3-way partition)              |
+| 6   | Cyclic Sort                       | Find missing / duplicate numbers in range 1..n |
+| 7   | Two Pointers Technique            | Remove duplicates                              |
+| 8   | Merge Intervals Algorithm         | Overlapping intervals merge                    |
+| 9   | Two Pointers Technique Additional | Move zeros                                     |
+| 10  | Binary Search (on array)          | Searching / min-max optimization               |
+| 11  | Rotate / Reverse Algorithm        | Array rotation, reversing sections             |
+| 12  | Prefix XOR / Prefix Min/Max       | For subarray XOR/sum-related problems          |
 
 ---
 

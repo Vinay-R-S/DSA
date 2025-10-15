@@ -180,7 +180,7 @@
 
 ---
 
-# 🧩 Arrays Algorithms
+# Arrays Algorithms
 
 This covers the **most common algorithms** related to Arrays that are frequently used in DSA questions. Each section includes:
 
@@ -725,7 +725,7 @@ public class SubarrayXor {
 ---
 
 
-# 🪟 Sliding Window Algorithms
+# Sliding Window Algorithms
 
 This covers the **core sliding window algorithms and patterns** used in array and string problems. Each section includes:
 
@@ -982,14 +982,9 @@ Longest Unique Substring = "abc" → length = 3
 
 ---
 
-✅ **Next Up:** Linked List Algorithms (Floyd’s Cycle Detection, Reverse, Merge, etc.)
-
-
----
-
 # Linked List Algorithms
 
-This covers the **core Linked list algorithms and patterns** used in array and string problems. Each section includes:
+This covers the **core Linked list algorithms and patterns**. Each section includes:
 
 * **Explanation** of the algorithm
 * **Java Function Code**
@@ -1233,4 +1228,1662 @@ public class OddEvenList {
     }
 }
 ```
+
+---
+
+# Heap [or] Priority Queue Algorithms
+
+This covers the **core Heap data structure & algorithms**. Each section includes:
+
+* **Explanation** of the algorithm
+* **Java Function Code**
+* **Example** to understand it clearly
+
+---
+
+## 1️⃣ Heapify (Build Heap)
+
+**Purpose:** Convert an unsorted array into a heap (max or min). This forms the foundation for heap-based algorithms.
+
+**Logic:** Start from the last non-leaf node and call `heapifyDown()` recursively.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class HeapifyBuild {
+    public static void heapify(int[] arr, int n, int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < n && arr[left] > arr[largest]) largest = left;
+        if (right < n && arr[right] > arr[largest]) largest = right;
+
+        if (largest != i) {
+            int temp = arr[i]; arr[i] = arr[largest]; arr[largest] = temp;
+            heapify(arr, n, largest);
+        }
+    }
+
+    public static void buildMaxHeap(int[] arr) {
+        int n = arr.length;
+        for (int i = n / 2 - 1; i >= 0; i--) heapify(arr, n, i);
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {4, 10, 3, 5, 1};
+        buildMaxHeap(arr);
+        System.out.println(Arrays.toString(arr)); // [10, 5, 3, 4, 1]
+    }
+}
+```
+
+---
+
+## 2️⃣ Heap Sort
+
+**Purpose:** Sort an array using heap structure.
+
+**Logic:**
+
+1. Build a max heap.
+2. Swap root (max) with last element.
+3. Reduce heap size and re-heapify.
+
+**Java Code:**
+
+```java
+public class HeapSort {
+    public static void heapSort(int[] arr) {
+        int n = arr.length;
+        for (int i = n / 2 - 1; i >= 0; i--) HeapifyBuild.heapify(arr, n, i);
+
+        for (int i = n - 1; i > 0; i--) {
+            int temp = arr[0]; arr[0] = arr[i]; arr[i] = temp;
+            HeapifyBuild.heapify(arr, i, 0);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {12, 11, 13, 5, 6, 7};
+        heapSort(arr);
+        System.out.println(Arrays.toString(arr)); // [5, 6, 7, 11, 12, 13]
+    }
+}
+```
+
+---
+
+## 3️⃣ Kth Largest / Smallest Element
+
+**Purpose:** Find Kth largest or smallest element efficiently.
+
+**Logic:** Use a min-heap of size k for largest, or max-heap for smallest.
+
+**Java Code:**
+
+```java
+public class KthElement {
+    public static int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        for (int num : nums) {
+            minHeap.add(num);
+            if (minHeap.size() > k) minHeap.poll();
+        }
+        return minHeap.peek();
+    }
+}
+```
+
+**Example:**
+
+```
+Input: [3,2,1,5,6,4], k=2
+Output: 5
+```
+
+---
+
+## 4️⃣ Top K Frequent Elements
+
+**Purpose:** Find k most frequent elements using HashMap + Heap.
+
+**Java Code:**
+
+```java
+public class TopKFrequent {
+    public static int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int n : nums) freq.put(n, freq.getOrDefault(n, 0) + 1);
+
+        PriorityQueue<Map.Entry<Integer, Integer>> pq =
+            new PriorityQueue<>((a, b) -> a.getValue() - b.getValue());
+
+        for (Map.Entry<Integer, Integer> e : freq.entrySet()) {
+            pq.add(e);
+            if (pq.size() > k) pq.poll();
+        }
+
+        int[] res = new int[k];
+        for (int i = k - 1; i >= 0; i--) res[i] = pq.poll().getKey();
+        return res;
+    }
+}
+```
+
+**Example:**
+
+```
+Input: [1,1,1,2,2,3], k=2
+Output: [1,2]
+```
+
+---
+
+## 5️⃣ Merge K Sorted Lists / Arrays
+
+**Purpose:** Merge K sorted linked lists or arrays efficiently using a min-heap.
+
+**Java Code:**
+
+```java
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) { val = x; }
+}
+
+public class MergeKLists {
+    public static ListNode mergeKLists(ListNode[] lists) {
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a, b) -> a.val - b.val);
+        for (ListNode node : lists) if (node != null) pq.add(node);
+
+        ListNode dummy = new ListNode(0), tail = dummy;
+        while (!pq.isEmpty()) {
+            ListNode min = pq.poll();
+            tail.next = min;
+            tail = tail.next;
+            if (min.next != null) pq.add(min.next);
+        }
+        return dummy.next;
+    }
+}
+```
+
+---
+
+## 6️⃣ Sliding Window Median
+
+**Purpose:** Maintain medians of a sliding window using two heaps (max-heap & min-heap).
+
+**Logic:**
+
+* Max-heap holds smaller half, min-heap holds larger half.
+* Balance sizes after each insert/remove.
+
+**Java Code (Simplified):**
+
+```java
+public class SlidingWindowMedian {
+    private PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+    private PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+    public void addNum(int num) {
+        if (maxHeap.isEmpty() || num <= maxHeap.peek()) maxHeap.add(num);
+        else minHeap.add(num);
+        balanceHeaps();
+    }
+
+    private void balanceHeaps() {
+        if (maxHeap.size() > minHeap.size() + 1) minHeap.add(maxHeap.poll());
+        else if (minHeap.size() > maxHeap.size()) maxHeap.add(minHeap.poll());
+    }
+
+    public double findMedian() {
+        if (maxHeap.size() == minHeap.size())
+            return (maxHeap.peek() + minHeap.peek()) / 2.0;
+        return maxHeap.peek();
+    }
+}
+```
+
+---
+
+## 7️⃣ Priority Queue Scheduling
+
+**Purpose:** Greedy optimization problems like CPU scheduling, meeting rooms, or task ordering.
+
+**Example — Meeting Rooms II:** Minimum number of meeting rooms required.
+
+```java
+public class MeetingRoomsII {
+    public static int minMeetingRooms(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        PriorityQueue<Integer> pq = new PriorityQueue<>(); // min-heap for end times
+
+        for (int[] interval : intervals) {
+            if (!pq.isEmpty() && pq.peek() <= interval[0]) pq.poll();
+            pq.add(interval[1]);
+        }
+        return pq.size();
+    }
+}
+```
+
+**Example:**
+
+```
+Input: [[0,30],[5,10],[15,20]]
+Output: 2
+```
+
+---
+
+# HashMap [or] Hashing Algorithms
+
+This covers the **core HashMap-based data structure & algorithms**. Each section includes:
+
+* **Explanation** of the algorithm
+* **Java Function Code**
+* **Example** to understand it clearly
+
+---
+
+## 1️⃣ Two Sum Algorithm
+
+**Purpose:** Find two numbers that add up to a target sum using a HashMap.
+
+**Logic:** Store each number's complement (target - num) in a HashMap and check if it exists.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class TwoSum {
+    public static int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                return new int[]{map.get(complement), i};
+            }
+            map.put(nums[i], i);
+        }
+        return new int[]{};
+    }
+
+    public static void main(String[] args) {
+        int[] res = twoSum(new int[]{2, 7, 11, 15}, 9);
+        System.out.println(Arrays.toString(res)); // [0, 1]
+    }
+}
+```
+
+**Example:**
+
+```
+Input: [2,7,11,15], target = 9
+Output: [0,1]
+```
+
+---
+
+## 2️⃣ Prefix Sum + HashMap
+
+**Purpose:** Count number of subarrays with a sum equal to K.
+
+**Logic:** Use a running sum and store frequency of prefix sums in HashMap.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class SubarraySumEqualsK {
+    public static int subarraySum(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        int sum = 0, count = 0;
+
+        for (int num : nums) {
+            sum += num;
+            if (map.containsKey(sum - k)) {
+                count += map.get(sum - k);
+            }
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 1, 1};
+        System.out.println(subarraySum(arr, 2)); // 2
+    }
+}
+```
+
+**Example:**
+
+```
+Input: [1,1,1], k = 2
+Output: 2
+```
+
+---
+
+## 3️⃣ Count Frequency / Distinct Elements
+
+**Purpose:** Count frequency of each element or find number of distinct elements.
+
+**Logic:** Use HashMap to count occurrences.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class CountFrequency {
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 2, 3, 3, 3};
+        Map<Integer, Integer> freq = new HashMap<>();
+
+        for (int n : nums) freq.put(n, freq.getOrDefault(n, 0) + 1);
+
+        System.out.println(freq); // {1=1, 2=2, 3=3}
+        System.out.println("Distinct elements: " + freq.size()); // 3
+    }
+}
+```
+
+**Example:**
+
+```
+Input: [1,2,2,3,3,3]
+Output: {1=1, 2=2, 3=3}, Distinct: 3
+```
+
+---
+
+## 4️⃣ Group Anagrams
+
+**Purpose:** Group words that are anagrams of each other.
+
+**Logic:** Sort each word or use character counts as key in HashMap.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class GroupAnagrams {
+    public static List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+
+        for (String s : strs) {
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
+        }
+        return new ArrayList<>(map.values());
+    }
+
+    public static void main(String[] args) {
+        String[] words = {"eat", "tea", "tan", "ate", "nat", "bat"};
+        System.out.println(groupAnagrams(words));
+    }
+}
+```
+
+**Example:**
+
+```
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"]
+Output: [[eat, tea, ate], [tan, nat], [bat]]
+```
+
+---
+
+## 5️⃣ Longest Substring Without Repetition
+
+**Purpose:** Find length of longest substring without repeating characters.
+
+**Logic:** Use HashSet to maintain current window and slide it when duplicates appear.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class LongestSubstringNoRepeat {
+    public static int lengthOfLongestSubstring(String s) {
+        Set<Character> set = new HashSet<>();
+        int left = 0, maxLen = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            while (set.contains(s.charAt(right))) {
+                set.remove(s.charAt(left++));
+            }
+            set.add(s.charAt(right));
+            maxLen = Math.max(maxLen, right - left + 1);
+        }
+        return maxLen;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(lengthOfLongestSubstring("abcabcbb")); // 3
+    }
+}
+```
+
+**Example:**
+
+```
+Input: "abcabcbb"
+Output: 3
+```
+
+---
+
+## 6️⃣ LRU Cache Algorithm
+
+**Purpose:** Implement Least Recently Used cache using HashMap and Doubly Linked List.
+
+**Logic:** HashMap for O(1) lookup + doubly linked list to track usage order.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+class LRUCache {
+    class Node {
+        int key, value;
+        Node prev, next;
+        Node(int k, int v) { key = k; value = v; }
+    }
+
+    private int capacity;
+    private Map<Integer, Node> map = new HashMap<>();
+    private Node head = new Node(0, 0), tail = new Node(0, 0);
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        head.next = tail;
+        tail.prev = head;
+    }
+
+    public int get(int key) {
+        if (!map.containsKey(key)) return -1;
+        Node node = map.get(key);
+        remove(node);
+        insert(node);
+        return node.value;
+    }
+
+    public void put(int key, int value) {
+        if (map.containsKey(key)) remove(map.get(key));
+        if (map.size() == capacity) remove(tail.prev);
+        insert(new Node(key, value));
+    }
+
+    private void insert(Node node) {
+        map.put(node.key, node);
+        node.next = head.next;
+        node.prev = head;
+        head.next.prev = node;
+        head.next = node;
+    }
+
+    private void remove(Node node) {
+        map.remove(node.key);
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+    public static void main(String[] args) {
+        LRUCache cache = new LRUCache(2);
+        cache.put(1, 1);
+        cache.put(2, 2);
+        System.out.println(cache.get(1)); // 1
+        cache.put(3, 3); // removes key 2
+        System.out.println(cache.get(2)); // -1
+    }
+}
+```
+
+**Example:**
+
+```
+Input: [put(1,1), put(2,2), get(1), put(3,3), get(2)]
+Output: [null, null, 1, null, -1]
+```
+
+---
+
+## 7️⃣ HashMap-based Sliding Window
+
+**Purpose:** Handle problems like minimum window substring or anagram finding.
+
+**Logic:** Maintain a frequency map and slide window adjusting counts.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class MinWindowSubstring {
+    public static String minWindow(String s, String t) {
+        if (s.length() < t.length()) return "";
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c : t.toCharArray()) map.put(c, map.getOrDefault(c, 0) + 1);
+
+        int left = 0, count = t.length(), minLen = Integer.MAX_VALUE, start = 0;
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            if (map.containsKey(c)) {
+                if (map.get(c) > 0) count--;
+                map.put(c, map.get(c) - 1);
+            }
+
+            while (count == 0) {
+                if (right - left + 1 < minLen) {
+                    minLen = right - left + 1;
+                    start = left;
+                }
+                char lc = s.charAt(left++);
+                if (map.containsKey(lc)) {
+                    map.put(lc, map.get(lc) + 1);
+                    if (map.get(lc) > 0) count++;
+                }
+            }
+        }
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(minWindow("ADOBECODEBANC", "ABC")); // BANC
+    }
+}
+```
+
+**Example:**
+
+```
+Input: s = "ADOBECODEBANC", t = "ABC"
+Output: "BANC"
+```
+
+---
+
+# Tree, Binary Tree & BST Algorithms
+
+This covers the **core Binary Tree & BST algorithms**. Each section includes:
+
+* **Explanation** of the algorithm
+* **Java Function Code**
+* **Example** to understand it clearly
+
+---
+
+## 1️⃣ DFS Traversal (Preorder, Inorder, Postorder)
+
+**Purpose:** Explore all nodes recursively in different traversal orders.
+
+**Logic:**
+
+* **Preorder:** Root → Left → Right
+* **Inorder:** Left → Root → Right
+* **Postorder:** Left → Right → Root
+
+**Java Code:**
+
+```java
+class TreeNode {
+    int val;
+    TreeNode left, right;
+    TreeNode(int val) { this.val = val; }
+}
+
+public class DFSTraversal {
+    public static void preorder(TreeNode root) {
+        if (root == null) return;
+        System.out.print(root.val + " ");
+        preorder(root.left);
+        preorder(root.right);
+    }
+
+    public static void inorder(TreeNode root) {
+        if (root == null) return;
+        inorder(root.left);
+        System.out.print(root.val + " ");
+        inorder(root.right);
+    }
+
+    public static void postorder(TreeNode root) {
+        if (root == null) return;
+        postorder(root.left);
+        postorder(root.right);
+        System.out.print(root.val + " ");
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(4);
+        root.left.right = new TreeNode(5);
+
+        System.out.print("Preorder: "); preorder(root);
+        System.out.print("\nInorder: "); inorder(root);
+        System.out.print("\nPostorder: "); postorder(root);
+    }
+}
+```
+
+**Example:**
+
+```
+Input Tree: [1,2,3,4,5]
+Preorder: 1 2 4 5 3
+Inorder: 4 2 5 1 3
+Postorder: 4 5 2 3 1
+```
+
+---
+
+## 2️⃣ BFS (Level Order Traversal)
+
+**Purpose:** Traverse tree level by level using a queue.
+
+**Logic:** Use a queue to process nodes from left to right for each level.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class LevelOrderTraversal {
+    public static List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+            List<Integer> level = new ArrayList<>();
+
+            for (int i = 0; i < size; i++) {
+                TreeNode node = q.poll();
+                level.add(node.val);
+                if (node.left != null) q.add(node.left);
+                if (node.right != null) q.add(node.right);
+            }
+            res.add(level);
+        }
+        return res;
+    }
+}
+```
+
+**Example:**
+
+```
+Input: [1,2,3,4,5]
+Output: [[1],[2,3],[4,5]]
+```
+
+---
+
+## 3️⃣ Diameter of Binary Tree
+
+**Purpose:** Find the longest path between two nodes.
+
+**Logic:** Diameter = max(left height + right height) for all nodes.
+
+**Java Code:**
+
+```java
+public class DiameterBinaryTree {
+    static int diameter = 0;
+
+    public static int height(TreeNode root) {
+        if (root == null) return 0;
+        int left = height(root.left);
+        int right = height(root.right);
+        diameter = Math.max(diameter, left + right);
+        return Math.max(left, right) + 1;
+    }
+
+    public static int getDiameter(TreeNode root) {
+        height(root);
+        return diameter;
+    }
+}
+```
+
+**Example:**
+
+```
+Input Tree: [1,2,3,4,5]
+Output: Diameter = 3 (Path 4→2→1→3)
+```
+
+---
+
+## 4️⃣ Lowest Common Ancestor (LCA)
+
+**Purpose:** Find the lowest node that is ancestor to both given nodes.
+
+**Logic:** If one node lies on left and other on right, current node is LCA.
+
+**Java Code:**
+
+```java
+public class LowestCommonAncestor {
+    public static TreeNode lca(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) return root;
+
+        TreeNode left = lca(root.left, p, q);
+        TreeNode right = lca(root.right, p, q);
+
+        if (left != null && right != null) return root;
+        return (left != null) ? left : right;
+    }
+}
+```
+
+**Example:**
+
+```
+Input Tree: [3,5,1,6,2,0,8,null,null,7,4], p=5, q=1
+Output: LCA = 3
+```
+
+---
+
+## 5️⃣ Inorder Successor [or] Predecessor
+
+**Purpose:** Find next or previous node in BST's inorder traversal.
+
+**Logic:**
+
+* Successor: Smallest node greater than key.
+* Predecessor: Largest node smaller than key.
+
+**Java Code:**
+
+```java
+public class BSTSuccessorPredecessor {
+    public static TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        TreeNode succ = null;
+        while (root != null) {
+            if (p.val < root.val) {
+                succ = root;
+                root = root.left;
+            } else root = root.right;
+        }
+        return succ;
+    }
+
+    public static TreeNode inorderPredecessor(TreeNode root, TreeNode p) {
+        TreeNode pred = null;
+        while (root != null) {
+            if (p.val > root.val) {
+                pred = root;
+                root = root.right;
+            } else root = root.left;
+        }
+        return pred;
+    }
+}
+```
+
+**Example:**
+
+```
+BST: [20,10,30,5,15,25,35], Node=10
+Successor: 15
+Predecessor: 5
+```
+
+---
+
+## 6️⃣ Serialize [or] Deserialize Binary Tree
+
+**Purpose:** Convert tree to string and reconstruct it back.
+
+**Logic:** Use preorder traversal with 'null' markers for missing nodes.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class SerializeDeserializeTree {
+    public static String serialize(TreeNode root) {
+        if (root == null) return "null,";
+        return root.val + "," + serialize(root.left) + serialize(root.right);
+    }
+
+    public static TreeNode deserialize(Queue<String> nodes) {
+        String val = nodes.poll();
+        if (val.equals("null")) return null;
+        TreeNode root = new TreeNode(Integer.parseInt(val));
+        root.left = deserialize(nodes);
+        root.right = deserialize(nodes);
+        return root;
+    }
+
+    public static TreeNode deserialize(String data) {
+        Queue<String> nodes = new LinkedList<>(Arrays.asList(data.split(",")));
+        return deserialize(nodes);
+    }
+}
+```
+
+**Example:**
+
+```
+Input Tree: [1,2,3,null,null,4,5]
+Serialized: 1,2,null,null,3,4,null,null,5,null,null,
+Deserialized: Restored Tree
+```
+
+---
+
+## 7️⃣ Morris Traversal
+
+**Purpose:** Perform inorder traversal without recursion or stack.
+
+**Logic:** Create temporary threads to predecessor nodes and backtrack.
+
+**Java Code:**
+
+```java
+public class MorrisTraversal {
+    public static void inorder(TreeNode root) {
+        TreeNode curr = root;
+        while (curr != null) {
+            if (curr.left == null) {
+                System.out.print(curr.val + " ");
+                curr = curr.right;
+            } else {
+                TreeNode pre = curr.left;
+                while (pre.right != null && pre.right != curr) pre = pre.right;
+
+                if (pre.right == null) {
+                    pre.right = curr;
+                    curr = curr.left;
+                } else {
+                    pre.right = null;
+                    System.out.print(curr.val + " ");
+                    curr = curr.right;
+                }
+            }
+        }
+    }
+}
+```
+
+**Example:**
+
+```
+Input Tree: [1,2,3,4,5]
+Output (Inorder): 4 2 5 1 3
+```
+
+---
+
+## 8️⃣ Balanced Tree Check
+
+**Purpose:** Check if tree is height-balanced.
+
+**Logic:** A tree is balanced if |leftHeight - rightHeight| <= 1 for all nodes.
+
+**Java Code:**
+
+```java
+public class BalancedTreeCheck {
+    public static int checkHeight(TreeNode root) {
+        if (root == null) return 0;
+        int left = checkHeight(root.left);
+        int right = checkHeight(root.right);
+        if (left == -1 || right == -1 || Math.abs(left - right) > 1) return -1;
+        return Math.max(left, right) + 1;
+    }
+
+    public static boolean isBalanced(TreeNode root) {
+        return checkHeight(root) != -1;
+    }
+}
+```
+
+**Example:**
+
+```
+Input Tree: [3,9,20,null,null,15,7]
+Output: true
+```
+
+---
+
+## 9️⃣ Boundary [or] Vertical [or] Zigzag Traversal
+
+**Purpose:** Explore tree in different structural patterns.
+
+**Logic:** Combine BFS and structural mapping using HashMap or deque.
+
+**Java Code (Zigzag Example):**
+
+```java
+import java.util.*;
+
+public class ZigzagTraversal {
+    public static List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        boolean leftToRight = true;
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+            LinkedList<Integer> level = new LinkedList<>();
+
+            for (int i = 0; i < size; i++) {
+                TreeNode node = q.poll();
+                if (leftToRight) level.addLast(node.val);
+                else level.addFirst(node.val);
+
+                if (node.left != null) q.add(node.left);
+                if (node.right != null) q.add(node.right);
+            }
+
+            res.add(level);
+            leftToRight = !leftToRight;
+        }
+        return res;
+    }
+}
+```
+
+**Example:**
+
+```
+Input: [3,9,20,null,null,15,7]
+Output: [[3],[20,9],[15,7]]
+```
+
+---
+
+## 🔟 BST Operations (Insert [or] Delete [or] Search)
+
+**Purpose:** Perform standard BST operations recursively.
+
+**Logic:** Use BST property to guide recursion.
+
+**Java Code:**
+
+```java
+public class BSTOperations {
+    public static TreeNode insert(TreeNode root, int val) {
+        if (root == null) return new TreeNode(val);
+        if (val < root.val) root.left = insert(root.left, val);
+        else root.right = insert(root.right, val);
+        return root;
+    }
+
+    public static TreeNode search(TreeNode root, int val) {
+        if (root == null || root.val == val) return root;
+        return val < root.val ? search(root.left, val) : search(root.right, val);
+    }
+
+    public static TreeNode delete(TreeNode root, int val) {
+        if (root == null) return null;
+        if (val < root.val) root.left = delete(root.left, val);
+        else if (val > root.val) root.right = delete(root.right, val);
+        else {
+            if (root.left == null) return root.right;
+            if (root.right == null) return root.left;
+
+            TreeNode minNode = root.right;
+            while (minNode.left != null) minNode = minNode.left;
+            root.val = minNode.val;
+            root.right = delete(root.right, minNode.val);
+        }
+        return root;
+    }
+}
+```
+
+**Example:**
+
+```
+Insert: [5,3,7] → Insert 4 → [5,3,4,7]
+Search: Key 7 → Found
+Delete: Key 3 → Tree becomes [5,4,7]
+```
+
+---
+
+# Graph Algorithms
+
+This covers the **core Graph algorithms and techniques** used in traversal, shortest paths, MST, and connectivity problems.
+
+Each section includes:
+
+* **Explanation** of the algorithm
+* **Java Function Code**
+* **Example** to understand it clearly
+
+---
+
+## 1️⃣ BFS (Breadth First Search)
+
+**Purpose:** Find the shortest path in an unweighted graph or traverse level by level.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class BFSGraph {
+    public static void bfs(int V, List<List<Integer>> adj, int start) {
+        boolean[] visited = new boolean[V];
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
+        visited[start] = true;
+
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            System.out.print(node + " ");
+            for (int neigh : adj.get(node)) {
+                if (!visited[neigh]) {
+                    visited[neigh] = true;
+                    q.add(neigh);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int V = 5;
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) adj.add(new ArrayList<>());
+        adj.get(0).addAll(Arrays.asList(1, 2));
+        adj.get(1).add(3);
+        adj.get(2).add(4);
+
+        bfs(V, adj, 0); // Output: 0 1 2 3 4
+    }
+}
+```
+
+---
+
+## 2️⃣ DFS (Depth First Search)
+
+**Purpose:** Explore connected components or detect cycles using recursion.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class DFSGraph {
+    public static void dfs(int node, boolean[] visited, List<List<Integer>> adj) {
+        visited[node] = true;
+        System.out.print(node + " ");
+        for (int neigh : adj.get(node)) {
+            if (!visited[neigh]) dfs(neigh, visited, adj);
+        }
+    }
+
+    public static void main(String[] args) {
+        int V = 5;
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) adj.add(new ArrayList<>());
+        adj.get(0).addAll(Arrays.asList(1, 2));
+        adj.get(1).add(3);
+        adj.get(2).add(4);
+
+        boolean[] visited = new boolean[V];
+        dfs(0, visited, adj); // Output: 0 1 3 2 4
+    }
+}
+```
+
+---
+
+## 3️⃣ Dijkstra’s Algorithm
+
+**Purpose:** Find the shortest path in weighted graphs with non-negative weights.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+class Pair {
+    int node, dist;
+    Pair(int n, int d) { node = n; dist = d; }
+}
+
+public class Dijkstra {
+    public static int[] dijkstra(int V, List<List<Pair>> adj, int src) {
+        int[] dist = new int[V];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[src] = 0;
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> a.dist - b.dist);
+        pq.add(new Pair(src, 0));
+
+        while (!pq.isEmpty()) {
+            Pair curr = pq.poll();
+            for (Pair edge : adj.get(curr.node)) {
+                if (dist[curr.node] + edge.dist < dist[edge.node]) {
+                    dist[edge.node] = dist[curr.node] + edge.dist;
+                    pq.add(new Pair(edge.node, dist[edge.node]));
+                }
+            }
+        }
+        return dist;
+    }
+
+    public static void main(String[] args) {
+        int V = 5;
+        List<List<Pair>> adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) adj.add(new ArrayList<>());
+        adj.get(0).add(new Pair(1, 2));
+        adj.get(0).add(new Pair(2, 4));
+        adj.get(1).add(new Pair(2, 1));
+        adj.get(2).add(new Pair(3, 7));
+
+        int[] dist = dijkstra(V, adj, 0);
+        System.out.println(Arrays.toString(dist)); // [0, 2, 3, 10, ∞]
+    }
+}
+```
+
+---
+
+## 4️⃣ Bellman-Ford Algorithm
+
+**Purpose:** Shortest path algorithm that handles negative edges.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class BellmanFord {
+    public static void bellmanFord(int V, int[][] edges, int src) {
+        int[] dist = new int[V];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[src] = 0;
+
+        for (int i = 1; i < V; i++) {
+            for (int[] e : edges) {
+                int u = e[0], v = e[1], w = e[2];
+                if (dist[u] != Integer.MAX_VALUE && dist[u] + w < dist[v]) dist[v] = dist[u] + w;
+            }
+        }
+
+        System.out.println(Arrays.toString(dist));
+    }
+}
+```
+
+**Example:**
+
+```
+Input: edges = {{0,1,5},{1,2,-2},{0,2,4}}, V=3, src=0
+Output: [0,5,3]
+```
+
+---
+
+## 5️⃣ Floyd-Warshall Algorithm
+
+**Purpose:** All-pairs shortest path using dynamic programming.
+
+**Java Code:**
+
+```java
+public class FloydWarshall {
+    public static void floydWarshall(int[][] dist) {
+        int V = dist.length;
+        for (int k = 0; k < V; k++)
+            for (int i = 0; i < V; i++)
+                for (int j = 0; j < V; j++)
+                    if (dist[i][k] + dist[k][j] < dist[i][j])
+                        dist[i][j] = dist[i][k] + dist[k][j];
+
+        for (int[] row : dist) System.out.println(Arrays.toString(row));
+    }
+}
+```
+
+**Example:**
+
+```
+Input: 3x3 matrix
+[[0, 5, INF], [50, 0, 10], [INF, INF, 0]]
+Output: [[0, 5, 15], [20, 0, 10], [INF, INF, 0]]
+```
+
+---
+
+## 6️⃣ Topological Sort (Kahn’s / DFS)
+
+**Purpose:** Order nodes in a DAG where each node appears before its dependents.
+
+**Java Code (Kahn’s Algorithm):**
+
+```java
+import java.util.*;
+
+public class TopoSort {
+    public static List<Integer> topoSort(int V, List<List<Integer>> adj) {
+        int[] indeg = new int[V];
+        for (List<Integer> list : adj)
+            for (int x : list) indeg[x]++;
+
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < V; i++) if (indeg[i] == 0) q.add(i);
+
+        List<Integer> res = new ArrayList<>();
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            res.add(node);
+            for (int neigh : adj.get(node)) if (--indeg[neigh] == 0) q.add(neigh);
+        }
+        return res;
+    }
+}
+```
+
+**Example:**
+
+```
+Input: 6, edges = [[5,2],[5,0],[4,0],[4,1],[2,3],[3,1]]
+Output: [4,5,2,3,1,0]
+```
+
+---
+
+## 7️⃣ Union-Find / DSU
+
+**Purpose:** Detect cycles or connect components efficiently.
+
+**Java Code:**
+
+```java
+public class DSU {
+    int[] parent, rank;
+
+    DSU(int n) {
+        parent = new int[n]; rank = new int[n];
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+
+    int find(int x) {
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+
+    void union(int x, int y) {
+        int px = find(x), py = find(y);
+        if (px == py) return;
+        if (rank[px] < rank[py]) parent[px] = py;
+        else if (rank[px] > rank[py]) parent[py] = px;
+        else { parent[py] = px; rank[px]++; }
+    }
+}
+```
+
+**Example:**
+
+```
+Union(0,1), Union(1,2) => find(0)==find(2) → true
+```
+
+---
+
+## 8️⃣ Kruskal’s Algorithm
+
+**Purpose:** Find Minimum Spanning Tree (MST) using DSU.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class Kruskal {
+    static class Edge { int u, v, w; Edge(int a, int b, int c){u=a;v=b;w=c;} }
+
+    public static int kruskalMST(int V, List<Edge> edges) {
+        Collections.sort(edges, (a,b) -> a.w - b.w);
+        DSU dsu = new DSU(V);
+        int mst = 0;
+        for (Edge e : edges) {
+            if (dsu.find(e.u) != dsu.find(e.v)) {
+                mst += e.w;
+                dsu.union(e.u, e.v);
+            }
+        }
+        return mst;
+    }
+}
+```
+
+**Example:**
+
+```
+Input: edges = [(0,1,1),(1,2,2),(0,2,3)]
+Output: 3
+```
+
+---
+
+## 9️⃣ Prim’s Algorithm
+
+**Purpose:** Find MST using a priority queue (greedy).
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class Prim {
+    public static int primMST(int V, List<List<Pair>> adj) {
+        boolean[] mstSet = new boolean[V];
+        int[] key = new int[V];
+        Arrays.fill(key, Integer.MAX_VALUE);
+        key[0] = 0;
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> a.dist - b.dist);
+        pq.add(new Pair(0,0));
+
+        int res = 0;
+        while (!pq.isEmpty()) {
+            int u = pq.poll().node;
+            if (mstSet[u]) continue;
+            mstSet[u] = true;
+            res += key[u];
+            for (Pair edge : adj.get(u)) {
+                if (!mstSet[edge.node] && edge.dist < key[edge.node]) {
+                    key[edge.node] = edge.dist;
+                    pq.add(new Pair(edge.node, key[edge.node]));
+                }
+            }
+        }
+        return res;
+    }
+}
+```
+
+**Example:**
+
+```
+Input: Graph with edges (0-1:2, 0-2:3, 1-2:1)
+Output: 3
+```
+
+---
+
+## 🔟 Tarjan’s Algorithm
+
+**Purpose:** Find Strongly Connected Components (SCCs), bridges, or articulation points.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class Tarjan {
+    static int time = 0;
+    public static void dfs(int u, int parent, List<List<Integer>> adj, int[] disc, int[] low, boolean[] vis) {
+        vis[u] = true;
+        disc[u] = low[u] = ++time;
+        for (int v : adj.get(u)) {
+            if (v == parent) continue;
+            if (!vis[v]) {
+                dfs(v, u, adj, disc, low, vis);
+                low[u] = Math.min(low[u], low[v]);
+                if (low[v] > disc[u]) System.out.println(u + " - " + v + " is a bridge");
+            } else low[u] = Math.min(low[u], disc[v]);
+        }
+    }
+}
+```
+
+**Example:**
+
+```
+Input: 0-1-2-0 and 1-3
+Output: Bridge: 1-3
+```
+
+---
+
+## 1️⃣1️⃣ Kosaraju’s Algorithm
+
+**Purpose:** Find all Strongly Connected Components (SCCs) using 2 DFS passes.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+public class Kosaraju {
+    public static void kosaraju(int V, List<List<Integer>> adj) {
+        Stack<Integer> st = new Stack<>();
+        boolean[] vis = new boolean[V];
+
+        for (int i = 0; i < V; i++) if (!vis[i]) dfs1(i, adj, vis, st);
+
+        List<List<Integer>> rev = new ArrayList<>();
+        for (int i = 0; i < V; i++) rev.add(new ArrayList<>());
+        for (int i = 0; i < V; i++) for (int j : adj.get(i)) rev.get(j).add(i);
+
+        Arrays.fill(vis, false);
+        while (!st.isEmpty()) {
+            int node = st.pop();
+            if (!vis[node]) {
+                dfs2(node, rev, vis);
+                System.out.println();
+            }
+        }
+    }
+
+    static void dfs1(int node, List<List<Integer>> adj, boolean[] vis, Stack<Integer> st) {
+        vis[node] = true;
+        for (int v : adj.get(node)) if (!vis[v]) dfs1(v, adj, vis, st);
+        st.push(node);
+    }
+
+    static void dfs2(int node, List<List<Integer>> rev, boolean[] vis) {
+        vis[node] = true;
+        System.out.print(node + " ");
+        for (int v : rev.get(node)) if (!vis[v]) dfs2(v, rev, vis);
+    }
+}
+```
+
+**Example:**
+
+```
+Input: Graph with SCCs [[0,1],[1,2],[2,0],[3,4]]
+Output:
+SCC1: 0 1 2
+SCC2: 3 4
+```
+
+---
+
+## 1️⃣2️⃣ Cycle Detection (Directed/Undirected)
+
+**Purpose:** Detect cycles in both directed and undirected graphs.
+
+**Java Code:**
+
+### 🔹 Directed Graph — Using DFS (Recursion Stack)
+
+**Idea:**
+
+* Use a DFS traversal.
+* Maintain two arrays:
+
+  * `visited[v]` — marks if a node has been visited.
+  * `recStack[v]` — marks if a node is currently in the recursion stack.
+* If we find a node that is already in the recursion stack → cycle detected.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+class DirectedCycleDetection {
+    private int vertices;
+    private List<List<Integer>> adj;
+
+    DirectedCycleDetection(int v) {
+        vertices = v;
+        adj = new ArrayList<>();
+        for (int i = 0; i < v; i++) adj.add(new ArrayList<>());
+    }
+
+    void addEdge(int u, int v) {
+        adj.get(u).add(v);
+    }
+
+    boolean isCyclicUtil(int node, boolean[] visited, boolean[] recStack) {
+        if (recStack[node]) return true;
+        if (visited[node]) return false;
+
+        visited[node] = true;
+        recStack[node] = true;
+
+        for (int neighbor : adj.get(node)) {
+            if (isCyclicUtil(neighbor, visited, recStack)) return true;
+        }
+
+        recStack[node] = false;
+        return false;
+    }
+
+    boolean isCyclic() {
+        boolean[] visited = new boolean[vertices];
+        boolean[] recStack = new boolean[vertices];
+
+        for (int i = 0; i < vertices; i++) {
+            if (isCyclicUtil(i, visited, recStack)) return true;
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        DirectedCycleDetection g = new DirectedCycleDetection(4);
+        g.addEdge(0, 1);
+        g.addEdge(1, 2);
+        g.addEdge(2, 0);
+        g.addEdge(2, 3);
+
+        System.out.println("Cycle exists (Directed): " + g.isCyclic());
+    }
+}
+```
+
+**Output:**
+
+```
+Cycle exists (Directed): true
+```
+
+---
+
+### 🔹 Undirected Graph — Using DFS
+
+**Idea:**
+
+* For each unvisited node, perform DFS.
+* If we find a neighbor that is visited and not the parent of the current node → cycle detected.
+
+**Java Code:**
+
+```java
+import java.util.*;
+
+class UndirectedCycleDetection {
+    private int vertices;
+    private List<List<Integer>> adj;
+
+    UndirectedCycleDetection(int v) {
+        vertices = v;
+        adj = new ArrayList<>();
+        for (int i = 0; i < v; i++) adj.add(new ArrayList<>());
+    }
+
+    void addEdge(int u, int v) {
+        adj.get(u).add(v);
+        adj.get(v).add(u);
+    }
+
+    boolean isCyclicUtil(int node, boolean[] visited, int parent) {
+        visited[node] = true;
+
+        for (int neighbor : adj.get(node)) {
+            if (!visited[neighbor]) {
+                if (isCyclicUtil(neighbor, visited, node)) return true;
+            } else if (neighbor != parent) {
+                return true; // Found a cycle
+            }
+        }
+        return false;
+    }
+
+    boolean isCyclic() {
+        boolean[] visited = new boolean[vertices];
+
+        for (int i = 0; i < vertices; i++) {
+            if (!visited[i]) {
+                if (isCyclicUtil(i, visited, -1)) return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        UndirectedCycleDetection g = new UndirectedCycleDetection(5);
+        g.addEdge(0, 1);
+        g.addEdge(1, 2);
+        g.addEdge(2, 0);
+
+        System.out.println("Cycle exists (Undirected): " + g.isCyclic());
+    }
+}
+```
+
+**Output:**
+
+```
+Cycle exists (Undirected): true
+```
+
+**Example:**
+
+```
+Directed Graph: 0→1→2→0 → Cycle Detected
+Undirected Graph: 0–1–2–0 → Cycle Detected
+```
+
+---
 
