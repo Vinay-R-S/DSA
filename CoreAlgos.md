@@ -1,6 +1,6 @@
 # Core Algorithms Algorithms & Techniques Cheatsheet
 
-## 🧩 Arrays
+##  Arrays
 
 | #   | Algorithm / Technique             | Purpose                                        |
 | --- | --------------------------------- | ---------------------------------------------- |
@@ -17,9 +17,7 @@
 | 11  | Rotate / Reverse Algorithm        | Array rotation, reversing sections             |
 | 12  | Prefix XOR / Prefix Min/Max       | For subarray XOR/sum-related problems          |
 
----
-
-## 🪟 Sliding Window
+##  Sliding Window
 
 | #   | Algorithm / Technique             | Purpose                                  |
 | --- | --------------------------------- | ---------------------------------------- |
@@ -29,9 +27,7 @@
 | 4   | Anagram Window with HashMap       | Count substrings with matching frequency |
 | 5   | Two-pointer Shrink-Expand Pattern | Common in substring problems             |
 
----
-
-## 🔗 Linked List
+##  Linked List
 
 | #   | Algorithm / Technique           | Purpose                          |
 | --- | ------------------------------- | -------------------------------- |
@@ -44,9 +40,7 @@
 | 7   | Merge Sort for Linked List      | Sorting without extra space      |
 | 8   | Reorder List / Odd-Even List    | Structural reordering            |
 
----
-
-## 🏔️ Heap / Priority Queue
+##  Heap / Priority Queue
 
 | #   | Algorithm / Technique         | Purpose                         |
 | --- | ----------------------------- | ------------------------------- |
@@ -58,9 +52,7 @@
 | 6   | Sliding Window Median         | Two heaps balancing             |
 | 7   | Priority Queue Scheduling     | Greedy + heap problems          |
 
----
-
-## 🧠 Hashmap / Hashing
+##  Hashmap / Hashing
 
 | #   | Algorithm / Technique                | Purpose                               |
 | --- | ------------------------------------ | ------------------------------------- |
@@ -72,9 +64,7 @@
 | 6   | LRU Cache Algorithm                  | HashMap + Doubly Linked List          |
 | 7   | HashMap-based Sliding Window         | Count frequency in substring problems |
 
----
-
-## 🌳 Trees
+##  Trees
 
 | #   | Algorithm / Technique                  | Purpose                                   |
 | --- | -------------------------------------- | ----------------------------------------- |
@@ -89,9 +79,7 @@
 | 9   | Boundary / Vertical / Zigzag Traversal | BFS + structure logic                     |
 | 10  | BST Operations (Insert/Delete/Search)  | Basic recursive logic                     |
 
----
-
-## 🌐 Graphs
+##  Graphs
 
 | #   | Algorithm / Technique                 | Purpose                                |
 | --- | ------------------------------------- | -------------------------------------- |
@@ -108,9 +96,7 @@
 | 11  | Kosaraju’s Algorithm                  | Strongly Connected Components          |
 | 12  | Cycle Detection (Directed/Undirected) | DFS or DSU based                       |
 
----
-
-## 🔁 Recursion / Backtracking
+##  Recursion / Backtracking
 
 | #   | Algorithm / Technique               | Purpose                         |
 | --- | ----------------------------------- | ------------------------------- |
@@ -120,9 +106,7 @@
 | 4   | Rat in a Maze / Word Search         | Path finding using recursion    |
 | 5   | Backtracking Template               | For all constraint satisfaction |
 
----
-
-## 📈 Dynamic Programming
+##  Dynamic Programming
 
 | #   | Algorithm / Technique                 | Purpose               |
 | --- | ------------------------------------- | --------------------- |
@@ -137,9 +121,7 @@
 | 9   | Edit Distance (Levenshtein)           | String transform DP   |
 | 10  | Subset Sum / Partition Equal Subset   | Boolean DP            |
 
----
-
-## ⚙️ Binary Search & Math
+##  Binary Search & Math
 
 | #   | Algorithm / Technique          | Purpose                   |
 | --- | ------------------------------ | ------------------------- |
@@ -152,9 +134,7 @@
 | 7   | Sieve of Eratosthenes          | Prime generation          |
 | 8   | Modular Exponentiation         | For large powers mod m    |
 
----
-
-## 🧮 Stack / Queue
+##  Stack / Queue
 
 | #   | Algorithm / Technique                  | Purpose                       |
 | --- | -------------------------------------- | ----------------------------- |
@@ -165,9 +145,7 @@
 | 5   | Largest Rectangle in Histogram         | Monotonic stack               |
 | 6   | Trapping Rain Water                    | Two pointers / stack approach |
 
----
-
-## 💡 Bit Manipulation
+##  Bit Manipulation
 
 | #   | Algorithm / Technique        | Purpose                  |
 | --- | ---------------------------- | ------------------------ |
@@ -178,8 +156,6 @@
 | 5   | XOR Pair / Max XOR Trie      | Bitwise trie             |
 | 6   | Swap using XOR               | Trick questions          |
 
----
-
 # Arrays Algorithms
 
 This covers the **most common algorithms** related to Arrays that are frequently used in DSA questions. Each section includes:
@@ -188,9 +164,7 @@ This covers the **most common algorithms** related to Arrays that are frequently
 * **Java Function Code**
 * **Example** to understand it clearly
 
----
-
-## 1️⃣ Kadane's Algorithm — Maximum Subarray Sum
+## 1 Kadane's Algorithm — Maximum Subarray Sum
 
 **Purpose:** Find the contiguous subarray with the maximum sum.
 
@@ -230,9 +204,7 @@ Array = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
 Max Subarray = [4, -1, 2, 1] → Sum = 6
 ```
 
----
-
-## 2️⃣ Moore’s Voting Algorithm — Majority Element
+## 2 Moore’s Voting Algorithm — Majority Element
 
 **Purpose:** Find the element that appears more than ⌊n/2⌋ times.
 
@@ -269,9 +241,7 @@ Array = [2, 2, 1, 1, 1, 2, 2]
 Majority Element = 2
 ```
 
----
-
-## 3️⃣ Moore’s Voting Algorithm — Majority Elements (n/3)
+## 3 Moore’s Voting Algorithm — Majority Elements (n/3)
 
 **Purpose**: Find all elements that appear more than ⌊n/3⌋ times.
 
@@ -334,7 +304,7 @@ CopyArray = [3, 2, 3, 1, 2, 2, 3, 3, 3]
 Majority Elements = [3, 2]
 ```
 
-## 4️⃣ Prefix Sum — Range Sum Queries
+## 4 Prefix Sum — Range Sum Queries
 
 **Purpose:** Quickly calculate sum of elements in range [L, R].
 
@@ -376,9 +346,7 @@ Array = [2, 4, 6, 8, 10]
 Range [1,3] → 4 + 6 + 8 = 18
 ```
 
----
-
-## 5️⃣ Dutch National Flag Algorithm — Sort 0s, 1s, 2s
+## 5 Dutch National Flag Algorithm — Sort 0s, 1s, 2s
 
 **Purpose:** Sort an array of 0s, 1s, and 2s in one pass.
 
@@ -425,9 +393,7 @@ Input: [2, 0, 2, 1, 1, 0]
 Output: [0, 0, 1, 1, 2, 2]
 ```
 
----
-
-## 6️⃣ Cyclic Sort — Find Missing Numbers in Range [1..n]
+## 6 Cyclic Sort — Find Missing Numbers in Range [1..n]
 
 **Purpose:** Efficiently detect missing or duplicate numbers.
 
@@ -471,9 +437,7 @@ Array = [3, 4, -1, 1]
 Missing Number = 2
 ```
 
----
-
-## 7️⃣ Two Pointers — Remove Duplicates from Sorted Array
+## 7 Two Pointers — Remove Duplicates from Sorted Array
 
 **Purpose:** In-place removal of duplicates from sorted array.
 
@@ -513,9 +477,7 @@ Input: [1,1,2,2,3,4,4]
 Output: [1,2,3,4]
 ```
 
----
-
-## 8️⃣ Merge Intervals — Merge Overlapping Intervals
+## 8 Merge Intervals — Merge Overlapping Intervals
 
 **Purpose:** Given a list of intervals, merge all overlapping intervals and return the merged list.
 
@@ -563,9 +525,7 @@ Input: [[1,3],[2,6],[8,10],[15,18]]
 Output: [[1,6],[8,10],[15,18]]
 ```
 
----
-
-## 9️⃣ Two Pointers Technique — (Additional Patterns)
+## 9 Two Pointers Technique — (Additional Patterns)
 
 **Purpose:** General-purpose method for problems on sorted arrays or when using two indices to scan from both ends.
 
@@ -606,9 +566,7 @@ public class MoveZeroes {
 }
 ```
 
----
-
-## 🔟 Binary Search (on array) — Classic & Variants
+##  Binary Search (on array) — Classic & Variants
 
 **Purpose:** Search in a sorted array; also used as a template for finding boundaries or searching over monotonic predicate (binary search on answer).
 
@@ -636,9 +594,7 @@ public class BinarySearchVariants {
 
 **Binary Search on Answer (example):** find smallest capacity that ships packages within D days is solved by binary searching over capacities and checking feasibility.
 
----
-
-## 1️⃣1️⃣ Rotate / Reverse Algorithm — Rotate Array by k
+## 11 Rotate / Reverse Algorithm — Rotate Array by k
 
 **Purpose:** Rotate an array to the right by `k` steps in-place.
 
@@ -679,9 +635,7 @@ Input: [1,2,3,4,5,6,7], k=3
 Output: [5,6,7,1,2,3,4]
 ```
 
----
-
-## 1️⃣2️⃣ Prefix XOR / Prefix Min/Max — Useful Prefix-Based Tricks
+## 12 Prefix XOR / Prefix Min/Max — Useful Prefix-Based Tricks
 
 **Purpose:** Support fast queries or compute properties of subarrays (XOR, min, max) using prefix accumulators.
 
@@ -722,8 +676,6 @@ public class SubarrayXor {
 
 * Useful for answering range min/max queries if combined with suffix arrays or segment trees. Build prefixMax[i] = max(prefixMax[i-1], arr[i]) and similar for prefixMin.
 
----
-
 
 # Sliding Window Algorithms
 
@@ -733,9 +685,7 @@ This covers the **core sliding window algorithms and patterns** used in array an
 * **Java Function Code**
 * **Example** to understand it clearly
 
----
-
-## 1️⃣ Fixed Size Sliding Window — Maximum Sum Subarray of Size K
+## 1 Fixed Size Sliding Window — Maximum Sum Subarray of Size K
 
 **Purpose:** Find the subarray of size `k` having the maximum sum.
 
@@ -776,9 +726,7 @@ Windows: [2,1,5]=8, [1,5,1]=7, [5,1,3]=9, [1,3,2]=6
 Max Sum = 9
 ```
 
----
-
-## 2️⃣ Variable Size Window — Longest Subarray with Sum ≤ K
+## 2 Variable Size Window — Longest Subarray with Sum ≤ K
 
 **Purpose:** Find the longest subarray whose sum is less than or equal to K.
 
@@ -819,9 +767,7 @@ Array = [4,1,1,1,2,3,5], K=5
 Longest Subarray = [1,1,1,2] → length 4
 ```
 
----
-
-## 3️⃣ Sliding Window Maximum — Using Deque
+## 3 Sliding Window Maximum — Using Deque
 
 **Purpose:** Find the maximum element in every window of size `k`.
 
@@ -873,9 +819,7 @@ Array = [1,3,-1,-3,5,3,6,7], k=3
 Windows → Max: [3,3,5,5,6,7]
 ```
 
----
-
-## 4️⃣ Count of Anagrams in String — Sliding Window + HashMap
+## 4 Count of Anagrams in String — Sliding Window + HashMap
 
 **Purpose:** Count number of substrings that are anagrams of a given pattern.
 
@@ -935,9 +879,7 @@ Text = "forxxorfxdofr", Pattern = "for"
 Anagrams found at → [for, orf, ofr] → Count = 3
 ```
 
----
-
-## 5️⃣ Longest Substring Without Repeating Characters
+## 5 Longest Substring Without Repeating Characters
 
 **Purpose:** Find the length of the longest substring without repeating characters.
 
@@ -980,8 +922,6 @@ String = "abcabcbb"
 Longest Unique Substring = "abc" → length = 3
 ```
 
----
-
 # Linked List Algorithms
 
 This covers the **core Linked list algorithms and patterns**. Each section includes:
@@ -990,9 +930,7 @@ This covers the **core Linked list algorithms and patterns**. Each section inclu
 * **Java Function Code**
 * **Example** to understand it clearly
 
----
-
-## 1️⃣ Floyd’s Cycle Detection (Tortoise & Hare)
+## 1 Floyd’s Cycle Detection (Tortoise & Hare)
 
 **Purpose:** Detect if a cycle exists in a linked list.
 
@@ -1020,9 +958,7 @@ public class FloydCycleDetection {
 
 **Example:** Detect cycle in linked list using two pointers.
 
----
-
-## 2️⃣ Reverse Linked List (Iterative & Recursive)
+## 2 Reverse Linked List (Iterative & Recursive)
 
 **Iterative Approach:**
 
@@ -1053,9 +989,7 @@ public static ListNode reverseRecursive(ListNode head) {
 }
 ```
 
----
-
-## 3️⃣ Merge Two Sorted Lists
+## 3 Merge Two Sorted Lists
 
 **Purpose:** Merge two sorted linked lists into one sorted list.
 
@@ -1080,9 +1014,7 @@ public class MergeSortedLists {
 }
 ```
 
----
-
-## 4️⃣ Find Middle Node (Fast & Slow Pointers)
+## 4 Find Middle Node (Fast & Slow Pointers)
 
 ```java
 public class MiddleOfList {
@@ -1099,9 +1031,7 @@ public class MiddleOfList {
 
 **Example:** Used in palindrome check or splitting for merge sort.
 
----
-
-## 5️⃣ Remove Nth Node from End
+## 5 Remove Nth Node from End
 
 **Two-pointer gap approach:**
 
@@ -1122,9 +1052,7 @@ public class RemoveNthNode {
 }
 ```
 
----
-
-## 6️⃣ Palindrome Check
+## 6 Palindrome Check
 
 **Logic:** Find middle, reverse second half, compare both halves.
 
@@ -1149,9 +1077,7 @@ public class PalindromeList {
 }
 ```
 
----
-
-## 7️⃣ Merge Sort for Linked List
+## 7 Merge Sort for Linked List
 
 **Logic:**
 
@@ -1174,9 +1100,7 @@ public class MergeSortLinkedList {
 }
 ```
 
----
-
-## 8️⃣ Reorder List / Odd-Even List
+## 8 Reorder List / Odd-Even List
 
 **Purpose:** Rearrange nodes for alternating pattern or group odd/even indices.
 
@@ -1229,8 +1153,6 @@ public class OddEvenList {
 }
 ```
 
----
-
 # Heap [or] Priority Queue Algorithms
 
 This covers the **core Heap data structure & algorithms**. Each section includes:
@@ -1239,9 +1161,7 @@ This covers the **core Heap data structure & algorithms**. Each section includes
 * **Java Function Code**
 * **Example** to understand it clearly
 
----
-
-## 1️⃣ Heapify (Build Heap)
+## 1 Heapify (Build Heap)
 
 **Purpose:** Convert an unsorted array into a heap (max or min). This forms the foundation for heap-based algorithms.
 
@@ -1280,9 +1200,7 @@ public class HeapifyBuild {
 }
 ```
 
----
-
-## 2️⃣ Heap Sort
+## 2 Heap Sort
 
 **Purpose:** Sort an array using heap structure.
 
@@ -1314,9 +1232,7 @@ public class HeapSort {
 }
 ```
 
----
-
-## 3️⃣ Kth Largest / Smallest Element
+## 3 Kth Largest / Smallest Element
 
 **Purpose:** Find Kth largest or smallest element efficiently.
 
@@ -1344,9 +1260,7 @@ Input: [3,2,1,5,6,4], k=2
 Output: 5
 ```
 
----
-
-## 4️⃣ Top K Frequent Elements
+## 4 Top K Frequent Elements
 
 **Purpose:** Find k most frequent elements using HashMap + Heap.
 
@@ -1380,9 +1294,7 @@ Input: [1,1,1,2,2,3], k=2
 Output: [1,2]
 ```
 
----
-
-## 5️⃣ Merge K Sorted Lists / Arrays
+## 5 Merge K Sorted Lists / Arrays
 
 **Purpose:** Merge K sorted linked lists or arrays efficiently using a min-heap.
 
@@ -1412,9 +1324,7 @@ public class MergeKLists {
 }
 ```
 
----
-
-## 6️⃣ Sliding Window Median
+## 6 Sliding Window Median
 
 **Purpose:** Maintain medians of a sliding window using two heaps (max-heap & min-heap).
 
@@ -1449,9 +1359,7 @@ public class SlidingWindowMedian {
 }
 ```
 
----
-
-## 7️⃣ Priority Queue Scheduling
+## 7 Priority Queue Scheduling
 
 **Purpose:** Greedy optimization problems like CPU scheduling, meeting rooms, or task ordering.
 
@@ -1479,8 +1387,6 @@ Input: [[0,30],[5,10],[15,20]]
 Output: 2
 ```
 
----
-
 # HashMap [or] Hashing Algorithms
 
 This covers the **core HashMap-based data structure & algorithms**. Each section includes:
@@ -1489,9 +1395,7 @@ This covers the **core HashMap-based data structure & algorithms**. Each section
 * **Java Function Code**
 * **Example** to understand it clearly
 
----
-
-## 1️⃣ Two Sum Algorithm
+## 1 Two Sum Algorithm
 
 **Purpose:** Find two numbers that add up to a target sum using a HashMap.
 
@@ -1529,9 +1433,7 @@ Input: [2,7,11,15], target = 9
 Output: [0,1]
 ```
 
----
-
-## 2️⃣ Prefix Sum + HashMap
+## 2 Prefix Sum + HashMap
 
 **Purpose:** Count number of subarrays with a sum equal to K.
 
@@ -1572,9 +1474,7 @@ Input: [1,1,1], k = 2
 Output: 2
 ```
 
----
-
-## 3️⃣ Count Frequency / Distinct Elements
+## 3 Count Frequency / Distinct Elements
 
 **Purpose:** Count frequency of each element or find number of distinct elements.
 
@@ -1605,9 +1505,7 @@ Input: [1,2,2,3,3,3]
 Output: {1=1, 2=2, 3=3}, Distinct: 3
 ```
 
----
-
-## 4️⃣ Group Anagrams
+## 4 Group Anagrams
 
 **Purpose:** Group words that are anagrams of each other.
 
@@ -1645,9 +1543,7 @@ Input: ["eat", "tea", "tan", "ate", "nat", "bat"]
 Output: [[eat, tea, ate], [tan, nat], [bat]]
 ```
 
----
-
-## 5️⃣ Longest Substring Without Repetition
+## 5 Longest Substring Without Repetition
 
 **Purpose:** Find length of longest substring without repeating characters.
 
@@ -1686,9 +1582,7 @@ Input: "abcabcbb"
 Output: 3
 ```
 
----
-
-## 6️⃣ LRU Cache Algorithm
+## 6 LRU Cache Algorithm
 
 **Purpose:** Implement Least Recently Used cache using HashMap and Doubly Linked List.
 
@@ -1762,9 +1656,7 @@ Input: [put(1,1), put(2,2), get(1), put(3,3), get(2)]
 Output: [null, null, 1, null, -1]
 ```
 
----
-
-## 7️⃣ HashMap-based Sliding Window
+## 7 HashMap-based Sliding Window
 
 **Purpose:** Handle problems like minimum window substring or anagram finding.
 
@@ -1817,8 +1709,6 @@ Input: s = "ADOBECODEBANC", t = "ABC"
 Output: "BANC"
 ```
 
----
-
 # Tree, Binary Tree & BST Algorithms
 
 This covers the **core Binary Tree & BST algorithms**. Each section includes:
@@ -1827,9 +1717,7 @@ This covers the **core Binary Tree & BST algorithms**. Each section includes:
 * **Java Function Code**
 * **Example** to understand it clearly
 
----
-
-## 1️⃣ DFS Traversal (Preorder, Inorder, Postorder)
+## 1 DFS Traversal (Preorder, Inorder, Postorder)
 
 **Purpose:** Explore all nodes recursively in different traversal orders.
 
@@ -1893,9 +1781,7 @@ Inorder: 4 2 5 1 3
 Postorder: 4 5 2 3 1
 ```
 
----
-
-## 2️⃣ BFS (Level Order Traversal)
+## 2 BFS (Level Order Traversal)
 
 **Purpose:** Traverse tree level by level using a queue.
 
@@ -1938,9 +1824,7 @@ Input: [1,2,3,4,5]
 Output: [[1],[2,3],[4,5]]
 ```
 
----
-
-## 3️⃣ Diameter of Binary Tree
+## 3 Diameter of Binary Tree
 
 **Purpose:** Find the longest path between two nodes.
 
@@ -1974,9 +1858,7 @@ Input Tree: [1,2,3,4,5]
 Output: Diameter = 3 (Path 4→2→1→3)
 ```
 
----
-
-## 4️⃣ Lowest Common Ancestor (LCA)
+## 4 Lowest Common Ancestor (LCA)
 
 **Purpose:** Find the lowest node that is ancestor to both given nodes.
 
@@ -2005,9 +1887,7 @@ Input Tree: [3,5,1,6,2,0,8,null,null,7,4], p=5, q=1
 Output: LCA = 3
 ```
 
----
-
-## 5️⃣ Inorder Successor [or] Predecessor
+## 5 Inorder Successor [or] Predecessor
 
 **Purpose:** Find next or previous node in BST's inorder traversal.
 
@@ -2052,9 +1932,7 @@ Successor: 15
 Predecessor: 5
 ```
 
----
-
-## 6️⃣ Serialize [or] Deserialize Binary Tree
+## 6 Serialize [or] Deserialize Binary Tree
 
 **Purpose:** Convert tree to string and reconstruct it back.
 
@@ -2095,9 +1973,7 @@ Serialized: 1,2,null,null,3,4,null,null,5,null,null,
 Deserialized: Restored Tree
 ```
 
----
-
-## 7️⃣ Morris Traversal
+## 7 Morris Traversal
 
 **Purpose:** Perform inorder traversal without recursion or stack.
 
@@ -2138,9 +2014,7 @@ Input Tree: [1,2,3,4,5]
 Output (Inorder): 4 2 5 1 3
 ```
 
----
-
-## 8️⃣ Balanced Tree Check
+## 8 Balanced Tree Check
 
 **Purpose:** Check if tree is height-balanced.
 
@@ -2171,9 +2045,7 @@ Input Tree: [3,9,20,null,null,15,7]
 Output: true
 ```
 
----
-
-## 9️⃣ Boundary [or] Vertical [or] Zigzag Traversal
+## 9 Boundary [or] Vertical [or] Zigzag Traversal
 
 **Purpose:** Explore tree in different structural patterns.
 
@@ -2221,9 +2093,7 @@ Input: [3,9,20,null,null,15,7]
 Output: [[3],[20,9],[15,7]]
 ```
 
----
-
-## 🔟 BST Operations (Insert [or] Delete [or] Search)
+##  BST Operations (Insert [or] Delete [or] Search)
 
 **Purpose:** Perform standard BST operations recursively.
 
@@ -2271,8 +2141,6 @@ Search: Key 7 → Found
 Delete: Key 3 → Tree becomes [5,4,7]
 ```
 
----
-
 # Graph Algorithms
 
 This covers the **core Graph algorithms and techniques** used in traversal, shortest paths, MST, and connectivity problems.
@@ -2283,9 +2151,7 @@ Each section includes:
 * **Java Function Code**
 * **Example** to understand it clearly
 
----
-
-## 1️⃣ BFS (Breadth First Search)
+## 1 BFS (Breadth First Search)
 
 **Purpose:** Find the shortest path in an unweighted graph or traverse level by level.
 
@@ -2326,9 +2192,7 @@ public class BFSGraph {
 }
 ```
 
----
-
-## 2️⃣ DFS (Depth First Search)
+## 2 DFS (Depth First Search)
 
 **Purpose:** Explore connected components or detect cycles using recursion.
 
@@ -2360,9 +2224,7 @@ public class DFSGraph {
 }
 ```
 
----
-
-## 3️⃣ Dijkstra’s Algorithm
+## 3 Dijkstra’s Algorithm
 
 **Purpose:** Find the shortest path in weighted graphs with non-negative weights.
 
@@ -2412,9 +2274,7 @@ public class Dijkstra {
 }
 ```
 
----
-
-## 4️⃣ Bellman-Ford Algorithm
+## 4 Bellman-Ford Algorithm
 
 **Purpose:** Shortest path algorithm that handles negative edges.
 
@@ -2448,9 +2308,7 @@ Input: edges = {{0,1,5},{1,2,-2},{0,2,4}}, V=3, src=0
 Output: [0,5,3]
 ```
 
----
-
-## 5️⃣ Floyd-Warshall Algorithm
+## 5 Floyd-Warshall Algorithm
 
 **Purpose:** All-pairs shortest path using dynamic programming.
 
@@ -2479,9 +2337,7 @@ Input: 3x3 matrix
 Output: [[0, 5, 15], [20, 0, 10], [INF, INF, 0]]
 ```
 
----
-
-## 6️⃣ Topological Sort (Kahn’s / DFS)
+## 6 Topological Sort (Kahn’s / DFS)
 
 **Purpose:** Order nodes in a DAG where each node appears before its dependents.
 
@@ -2517,9 +2373,7 @@ Input: 6, edges = [[5,2],[5,0],[4,0],[4,1],[2,3],[3,1]]
 Output: [4,5,2,3,1,0]
 ```
 
----
-
-## 7️⃣ Union-Find / DSU
+## 7 Union-Find / DSU
 
 **Purpose:** Detect cycles or connect components efficiently.
 
@@ -2555,9 +2409,7 @@ public class DSU {
 Union(0,1), Union(1,2) => find(0)==find(2) → true
 ```
 
----
-
-## 8️⃣ Kruskal’s Algorithm
+## 8 Kruskal’s Algorithm
 
 **Purpose:** Find Minimum Spanning Tree (MST) using DSU.
 
@@ -2591,9 +2443,7 @@ Input: edges = [(0,1,1),(1,2,2),(0,2,3)]
 Output: 3
 ```
 
----
-
-## 9️⃣ Prim’s Algorithm
+## 9 Prim’s Algorithm
 
 **Purpose:** Find MST using a priority queue (greedy).
 
@@ -2637,9 +2487,7 @@ Input: Graph with edges (0-1:2, 0-2:3, 1-2:1)
 Output: 3
 ```
 
----
-
-## 🔟 Tarjan’s Algorithm
+##  Tarjan’s Algorithm
 
 **Purpose:** Find Strongly Connected Components (SCCs), bridges, or articulation points.
 
@@ -2672,9 +2520,7 @@ Input: 0-1-2-0 and 1-3
 Output: Bridge: 1-3
 ```
 
----
-
-## 1️⃣1️⃣ Kosaraju’s Algorithm
+## 11 Kosaraju’s Algorithm
 
 **Purpose:** Find all Strongly Connected Components (SCCs) using 2 DFS passes.
 
@@ -2727,15 +2573,13 @@ SCC1: 0 1 2
 SCC2: 3 4
 ```
 
----
-
-## 1️⃣2️⃣ Cycle Detection (Directed/Undirected)
+## 12 Cycle Detection (Directed/Undirected)
 
 **Purpose:** Detect cycles in both directed and undirected graphs.
 
 **Java Code:**
 
-### 🔹 Directed Graph — Using DFS (Recursion Stack)
+###  Directed Graph — Using DFS (Recursion Stack)
 
 **Idea:**
 
@@ -2808,9 +2652,7 @@ class DirectedCycleDetection {
 Cycle exists (Directed): true
 ```
 
----
-
-### 🔹 Undirected Graph — Using DFS
+###  Undirected Graph — Using DFS
 
 **Idea:**
 
@@ -2884,6 +2726,4 @@ Cycle exists (Undirected): true
 Directed Graph: 0→1→2→0 → Cycle Detected
 Undirected Graph: 0–1–2–0 → Cycle Detected
 ```
-
----
 

@@ -1,9 +1,9 @@
 # DSA realted info here
 
 <details>
-<summary><h2>📚 Core Algorithms - <code>CoreAlgos.md</code></h2></summary>
+<summary><h2> Core Algorithms - <code>CoreAlgos.md</code></h2></summary>
 
-## 🧩 Arrays
+##  Arrays
 
 | #   | Algorithm / Technique             | Purpose                                        |
 | --- | --------------------------------- | ---------------------------------------------- |
@@ -20,9 +20,7 @@
 | 11  | Rotate / Reverse Algorithm        | Array rotation, reversing sections             |
 | 12  | Prefix XOR / Prefix Min/Max       | For subarray XOR/sum-related problems          |
 
----
-
-## 🪟 Sliding Window
+##  Sliding Window
 
 | #   | Algorithm / Technique             | Purpose                                  |
 | --- | --------------------------------- | ---------------------------------------- |
@@ -32,9 +30,7 @@
 | 4   | Anagram Window with HashMap       | Count substrings with matching frequency |
 | 5   | Two-pointer Shrink-Expand Pattern | Common in substring problems             |
 
----
-
-## 🔗 Linked List
+##  Linked List
 
 | #   | Algorithm / Technique           | Purpose                          |
 | --- | ------------------------------- | -------------------------------- |
@@ -47,9 +43,7 @@
 | 7   | Merge Sort for Linked List      | Sorting without extra space      |
 | 8   | Reorder List / Odd-Even List    | Structural reordering            |
 
----
-
-## 🏔️ Heap / Priority Queue
+## Heap / Priority Queue
 
 | #   | Algorithm / Technique         | Purpose                         |
 | --- | ----------------------------- | ------------------------------- |
@@ -61,9 +55,7 @@
 | 6   | Sliding Window Median         | Two heaps balancing             |
 | 7   | Priority Queue Scheduling     | Greedy + heap problems          |
 
----
-
-## 🧠 Hashmap / Hashing
+##  Hashmap / Hashing
 
 | #   | Algorithm / Technique                | Purpose                               |
 | --- | ------------------------------------ | ------------------------------------- |
@@ -75,9 +67,7 @@
 | 6   | LRU Cache Algorithm                  | HashMap + Doubly Linked List          |
 | 7   | HashMap-based Sliding Window         | Count frequency in substring problems |
 
----
-
-## 🌳 Trees
+##  Trees
 
 | #   | Algorithm / Technique                  | Purpose                                   |
 | --- | -------------------------------------- | ----------------------------------------- |
@@ -92,9 +82,7 @@
 | 9   | Boundary / Vertical / Zigzag Traversal | BFS + structure logic                     |
 | 10  | BST Operations (Insert/Delete/Search)  | Basic recursive logic                     |
 
----
-
-## 🌐 Graphs
+##  Graphs
 
 | #   | Algorithm / Technique                 | Purpose                                |
 | --- | ------------------------------------- | -------------------------------------- |
@@ -111,9 +99,7 @@
 | 11  | Kosaraju’s Algorithm                  | Strongly Connected Components          |
 | 12  | Cycle Detection (Directed/Undirected) | DFS or DSU based                       |
 
----
-
-## 🔁 Recursion / Backtracking
+##  Recursion / Backtracking
 
 | #   | Algorithm / Technique               | Purpose                         |
 | --- | ----------------------------------- | ------------------------------- |
@@ -123,9 +109,7 @@
 | 4   | Rat in a Maze / Word Search         | Path finding using recursion    |
 | 5   | Backtracking Template               | For all constraint satisfaction |
 
----
-
-## 📈 Dynamic Programming
+##  Dynamic Programming
 
 | #   | Algorithm / Technique                 | Purpose               |
 | --- | ------------------------------------- | --------------------- |
@@ -140,9 +124,7 @@
 | 9   | Edit Distance (Levenshtein)           | String transform DP   |
 | 10  | Subset Sum / Partition Equal Subset   | Boolean DP            |
 
----
-
-## ⚙️ Binary Search & Math
+## Binary Search & Math
 
 | #   | Algorithm / Technique          | Purpose                   |
 | --- | ------------------------------ | ------------------------- |
@@ -155,9 +137,7 @@
 | 7   | Sieve of Eratosthenes          | Prime generation          |
 | 8   | Modular Exponentiation         | For large powers mod m    |
 
----
-
-## 🧮 Stack / Queue
+##  Stack / Queue
 
 | #   | Algorithm / Technique                  | Purpose                       |
 | --- | -------------------------------------- | ----------------------------- |
@@ -168,9 +148,7 @@
 | 5   | Largest Rectangle in Histogram         | Monotonic stack               |
 | 6   | Trapping Rain Water                    | Two pointers / stack approach |
 
----
-
-## 💡 Bit Manipulation
+##  Bit Manipulation
 
 | #   | Algorithm / Technique        | Purpose                  |
 | --- | ---------------------------- | ------------------------ |
