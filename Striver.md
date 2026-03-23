@@ -185,7 +185,7 @@ return maxProfit;
 ```
 
 ### 8. Next Permutation (Medium)
-> [Link]()
+> [Link](https://leetcode.com/problems/next-permutation/) - Leetcode 31
 ```
 1. Find the index of the element which is smaller then the next element from the right side
 2. If no index is -1 then return the reversed array
@@ -220,4 +220,66 @@ else
     nums[swapIdx] = temp;
     reverse(nums, idx+1, n-1);
 }
+```
+
+### 9. Leaders in an Array (Medium)
+> [Link](https://takeuforward.org/plus/dsa/problems/leaders-in-an-array)
+```
+1. Initialize the max to last element and add it to List
+2. Keep a track of Running max while traversing from the right to left of the array
+3. If current element is greater then the max then add to the List and update the max
+```
+
+```java
+int n = nums.length, prevMax = nums[n-1];
+List<Integer> ans = new ArrayList<>();
+ans.add(nums[n-1]);
+for(int i=n-2; i>=0; i--)    
+{
+    if(nums[i] > prevMax) 
+    {
+        ans.add(nums[i]);
+        prevMax = Math.max(prevMax, nums[i]);
+    }
+}
+n = ans.size();
+for(int i=0; i<n/2; i++)
+{
+    int temp = ans.get(i);
+    ans.set(i, ans.get(n-i-1));
+    ans.set(n-i-1, temp);
+}
+return ans;
+```
+
+### 10. Longest Consecutive Sequence (Medium)
+> [Link](https://leetcode.com/problems/longest-consecutive-sequence/) - Leetcode 128
+
+```
+1. Add all the elements to a HashSet
+2. Traverse one by one element in the array and check if (num + 1) exists in the set using a while loop
+3. Keep track of max length and return it
+```
+
+```java
+HashSet<Integer> set = new HashSet<>();
+for(int n : nums) set.add(n);
+int max = 0;
+for(int n : set)
+{
+    if(!set.contains(n - 1))
+    {
+        int curr = n;
+        int len = 1;
+
+        while(set.contains(curr + 1))
+        {
+            curr++;
+            len++;
+        }
+
+        max = Math.max(max, len);
+    }
+}
+return max;
 ```
