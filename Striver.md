@@ -283,3 +283,42 @@ for(int n : set)
 }
 return max;
 ```
+
+### 11. Set Matrix Zeroes (Medium)
+> [Link](https://leetcode.com/problems/set-matrix-zeroes/) - Leetcode 73
+
+```
+1. Check if the 0th Row and 0th Column has 0 in it and store it as a Boolean
+2. Interate from 1st Row and 1st Column is any element is zero then mark that elements 0th Row and 0th Column as 0
+3. Check the 0th Row and 0th Column and mark the elements zero in 2nd iteration
+4. Check the Boolean values and make the elements to zero if 0th Row or 0th Column was true
+```
+
+```java
+int rows = matrix.length;
+int cols = matrix[0].length;
+boolean firstRowZero = false;
+boolean firstColZero = false;
+for(int j=0; j<cols; j++) if(matrix[0][j] == 0) firstRowZero = true;
+for(int i=0; i<rows; i++) if(matrix[i][0] == 0) firstColZero = true;
+for(int i=1; i<rows; i++) 
+{
+    for(int j=1; j<cols; j++) 
+    {
+        if(matrix[i][j] == 0) 
+        {
+            matrix[i][0] = 0;
+            matrix[0][j] = 0;
+        }
+    }
+}
+for(int i=1; i<rows; i++) 
+{
+    for(int j=1; j<cols; j++) 
+    {
+        if(matrix[i][0] == 0 || matrix[0][j] == 0) matrix[i][j] = 0;
+    }
+}
+if(firstRowZero) for(int j=0; j<cols; j++) matrix[0][j] = 0;
+if(firstColZero) for(int i=0; i<rows; i++) matrix[i][0] = 0;
+```
