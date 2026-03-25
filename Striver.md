@@ -271,13 +271,11 @@ for(int n : set)
     {
         int curr = n;
         int len = 1;
-
         while(set.contains(curr + 1))
         {
             curr++;
             len++;
         }
-
         max = Math.max(max, len);
     }
 }
@@ -321,4 +319,128 @@ for(int i=1; i<rows; i++)
 }
 if(firstRowZero) for(int j=0; j<cols; j++) matrix[0][j] = 0;
 if(firstColZero) for(int i=0; i<rows; i++) matrix[i][0] = 0;
+```
+
+### 12. Rotate Matrix by 90 Degree (Medium)
+> [Link](https://leetcode.com/problems/rotate-image/) - Leetcode 48
+
+```
+1. Transpose the Matrix
+2. Reverse each Row of the Matrix
+```
+
+```java
+int n = matrix.length;
+int temp = 0, left = 0, right = 0;
+for(int i=0; i<n; i++)
+{
+    for(int j=i; j<n; j++)
+    {
+        temp = matrix[i][j];
+        matrix[i][j] = matrix[j][i];
+        matrix[j][i] = temp;
+    }   
+}
+for(int i=0; i<n; i++)
+{
+    left = 0;
+    right = n-1;
+    while(left <= right)
+    {
+        temp = matrix[i][left];
+        matrix[i][left] = matrix[i][right];
+        matrix[i][right] = temp;
+
+        left++;
+        right--;
+    }
+}
+```
+
+### 13. Spiral Matrix (Medium)
+> [Link](https://leetcode.com/problems/spiral-matrix/) - Leetcode 54
+
+```
+1. Initialize the end pointers i.e., minR, maxR, minC, maxC
+2. Traverse the Matrix in Pattern and keep count of number of elements
+3. Traversal pattern is
+   Left to Right (Top Row)
+   Top to Bottom (Right Column)
+   Right to Left (Bottom Row)
+   Bottom to Top (Left Column)
+4. Keep the track of elements passed count and then once its > matrix size break the loop
+```
+
+```java
+List<Integer> ans = new ArrayList<>();
+int m = matrix.length;
+int n = matrix[0].length;
+int minR = 0;
+int maxR = m-1;
+int minC = 0;
+int maxC = n-1;
+int count = 0;
+int total = m*n;
+while(count < total)
+{
+    for(int i=minC; i<=maxC; i++)
+    {
+        if(count >= total) return ans;
+        ans.add(matrix[minR][i]);
+        count++;
+    }
+    minR++;
+    if(count > total) break;
+
+    for(int i=minR; i<=maxR; i++)
+    {
+        if(count >= total) return ans;
+        ans.add(matrix[i][maxC]);
+        count++;
+    }
+    maxC--;
+    if(count > total) break;
+
+    for(int i=maxC; i>=minC; i--)
+    {
+        if(count >= total) return ans;
+        ans.add(matrix[maxR][i]);
+        count++;
+    }
+    maxR--;
+    if(count > total) break;
+
+    for(int i=maxR; i>=minR; i--)
+    {
+        if(count >= total) return ans;
+        ans.add(matrix[i][minC]);
+        count++;
+    }
+    minC++;
+    if(count >= total) break;
+}
+return ans;
+```
+
+### 14. Subarray Sum Equals K (Medium)
+> [Link](https://leetcode.com/problems/subarray-sum-equals-k/) - Leetcode 560
+
+```
+1. Create a HashMap and Keep a track of running Sum
+2. Check if the Running Sum = k, If so increase the count
+3. Check if (Running Sum - k) key exists in the Map then increase the count by the value of that key
+4. Add the Running Sum to the Map if it doesn't exist if not increase the count by 1
+```
+
+```java
+Map<Integer, Integer> prefixSums = new HashMap<>();
+int cnt = 0, currSum = 0, n = nums.length;
+for(int i=0; i<n; i++) 
+{
+    currSum += nums[i];
+    if(currSum == k) cnt++;
+    if(prefixSums.containsKey(currSum - k)) cnt += prefixSums.get(currSum - k);
+    prefixSums.put(currSum, prefixSums.getOrDefault(currSum, 0) + 1);
+}
+return cnt;
 ```
