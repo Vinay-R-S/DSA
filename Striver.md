@@ -444,3 +444,41 @@ for(int i=0; i<n; i++)
 }
 return cnt;
 ```
+
+### 15. Pascal's Triangle (Easy)
+> [Link](https://leetcode.com/problems/pascals-triangle/) - Leetcode 118
+
+```
+1. Make a subList with 1 as element
+2. Make a subList with 1 1 as elements
+3. Now use these subList to generate further
+```
+
+```java
+List<List<Integer>> ans = new ArrayList<>();
+List<Integer> sub_ans = new ArrayList<>();
+sub_ans.add(1);
+ans.add(sub_ans);
+if(numRows == 1) return ans;
+List<Integer> sub_ans2 = new ArrayList<>();
+sub_ans2.add(1); sub_ans2.add(1);
+ans.add(sub_ans2);
+if(numRows == 2) return ans;
+int r = numRows;
+while(r > 2)
+{
+    List<Integer> sub_ans3 = new ArrayList<>();
+    sub_ans3.add(1);
+    int idx = 1;
+    int s = ans.size()-1;
+    while(idx < ans.get(s).size())
+    {
+        sub_ans3.add(ans.get(s).get(idx) + ans.get(s).get(idx-1));
+        idx++;
+    }
+    sub_ans3.add(1);
+    ans.add(sub_ans3);
+    r--;
+}
+return ans;
+```
