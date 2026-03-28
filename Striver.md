@@ -482,3 +482,87 @@ while(r > 2)
 }
 return ans;
 ```
+
+### 16. Majority Element II (Medium)
+> [Link](https://leetcode.com/problems/majority-element-ii/) - Leetcode 229
+
+```
+1. Initialize cnt1 = 0, cnt2 = 0, num1 = num2 = Integer.MIN_VALUE
+2. Refer the conditional statements in the code block
+```
+
+```java
+int n = nums.length, min = (int)Math.floor(n/3);
+int cnt1 = 0, cnt2 = 0, num1 = Integer.MIN_VALUE, num2 = Integer.MIN_VALUE;
+List<Integer> ans = new ArrayList<>();
+for(int i=0; i<n; i++)
+{
+    if(cnt1 == 0 && nums[i] != num2)
+    {
+        cnt1 = 1;
+        num1 = nums[i];
+    }
+    else if(cnt2 == 0 && nums[i] != num1)
+    {
+        cnt2 = 1;
+        num2 = nums[i];
+    }
+    else if(nums[i] == num1) cnt1++;
+    else if(nums[i] == num2) cnt2++;
+    else
+    {
+        cnt1--;
+        cnt2--;
+    }
+}
+cnt1 = 0;
+cnt2 = 0;
+for(int i : nums)
+{
+    if(num1 == i) cnt1++;
+    else if(num2 == i) cnt2++;
+}
+if(num1 != Integer.MIN_VALUE && cnt1 > min) ans.add(num1);
+if(num2 != Integer.MIN_VALUE && cnt2 > min) ans.add(num2);
+return ans;
+```
+
+### 17. 3Sum (Medium)
+> [Link](https://leetcode.com/problems/3sum/) - Leetcode 15
+
+```
+1. Sort the array
+2. Iterate through the array
+3. Pick an element and pick left and right pointers (After that element)
+4. Use Binary search to find the 3rd number so that the sum = 0 if so add this 3 numbers to the List
+5. Skip the 
+```
+
+```java
+int n = nums.length;
+Arrays.sort(nums);
+List<List<Integer>> ans = new ArrayList<>();
+for(int i=0; i<n-2; i++) 
+{
+    if(i > 0 && nums[i] == nums[i-1]) continue;
+    int left = i+1;
+    int right = n-1;
+    while(left < right) 
+    {
+        int sum = nums[i] + nums[left] + nums[right];
+        if(sum == 0) 
+        {
+            ans.add(Arrays.asList(nums[i], nums[left], nums[right]));
+            left++;
+            right--;
+            while(left < right && nums[left] == nums[left-1]) left++;
+            while(left < right && nums[right] == nums[right+1]) right--;
+        } 
+        else if(sum < 0) left++;
+        else right--;
+    }
+}
+return ans;
+```
+
+
