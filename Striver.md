@@ -350,7 +350,6 @@ for(int i=0; i<n; i++)
         temp = matrix[i][left];
         matrix[i][left] = matrix[i][right];
         matrix[i][right] = temp;
-
         left++;
         right--;
     }
@@ -565,4 +564,51 @@ for(int i=0; i<n-2; i++)
 return ans;
 ```
 
+### 18. 4Sum (Medium)
+> [Link](https://leetcode.com/problems/4sum/) - Leetcode 18
 
+```
+1. Sort the array
+2. Loop using variable i (Skip the duplicates)
+3. Loop using variable j = i+1 (Skip the duplicates)
+4. Use while loop using two pointers k and l
+5. Add all numbers and if target then add the numbers to list and skip the duplicates
+6. If sum < target then move k right
+7. Else move l to left
+```
+
+```java
+Arrays.sort(nums);
+List<List<Integer>> ans = new ArrayList<>();
+int n = nums.length, k = 0, l = 0;
+for(int i=0; i<n; i++)
+{
+    if(i > 0 && nums[i] == nums[i-1]) continue;
+    for(int j=i+1; j<n; j++)
+    {
+        if(j != (i+1) && nums[j] == nums[j-1]) continue;
+        k = j+1;
+        l = n-1;
+        while(k < l)
+        {
+            long sum = (long)nums[i] + nums[j] + nums[k] + nums[l];
+            if(sum == target)
+            {
+                List<Integer> subAns = new ArrayList<>();
+                subAns.add(nums[i]);
+                subAns.add(nums[j]);
+                subAns.add(nums[k]);
+                subAns.add(nums[l]);
+                ans.add(subAns);
+                k++;
+                l--;
+                while(k < l && nums[k] == nums[k-1]) k++;
+                while(k < l && nums[l] == nums[l+1]) l--;
+            }
+            else if(sum < target) k++;
+            else l--;
+        }
+    }
+}
+return ans;
+```
