@@ -612,3 +612,62 @@ for(int i=0; i<n; i++)
 }
 return ans;
 ```
+
+### 19. Longest Subarray with sum 0 (Medium)
+> [Link](https://takeuforward.org/plus/dsa/problems/largest-subarray-with-sum-0)
+
+```
+1. Make a Hashmap
+3. Iterate over the loop
+4. Check if the running sum is equal to 0 if so then update the maxLen = i+1
+2. Store the running sum if not present in the Hashmap (Sum, Index)
+3. Check if there is (sum - 0) in the Hashmap if so then check the max of (maxLen) and (i - idx of (sum - 0))
+```
+
+```java
+HashMap<Integer, Integer> map = new HashMap<>();
+int n = arr.length, sum = 0, max = 0, k = 0;
+for(int i=0; i<n; i++)
+{
+    sum += arr[i];
+    if(sum == k) { max = i+1; }
+    if(!map.containsKey(sum)) { map.put(sum, i); }
+    if(map.containsKey(sum - k)) { max = Math.max(max, i - map.get(sum - k)); }
+}
+return max;
+```
+
+### 21. Merge Intervals (Medium)
+> [Link](https://leetcode.com/problems/merge-intervals/) - Leetcode 56
+
+```
+1. Sort the Interval array based on the 1st element
+2. Then merge the arrays if arr[i][1] >= arr[i+1][0] if not
+3. Create a new array of size two and add it to the List
+```
+
+```java
+int n = intervals.length;
+if(n == 1) return intervals;
+
+Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+
+List<int[]> result = new ArrayList<>();
+
+int start = intervals[0][0];
+int end = intervals[0][1];
+
+for(int i=1; i<n; i++)
+{
+    if(intervals[i][0] <= end) end = Math.max(end, intervals[i][1]);
+    else 
+    {
+        result.add(new int[]{start, end});
+        start = intervals[i][0];
+        end = intervals[i][1];
+    }
+}
+
+result.add(new int[]{start, end});
+return result.toArray(new int[result.size()][]);
+```
