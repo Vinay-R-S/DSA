@@ -637,6 +637,31 @@ for(int i=0; i<n; i++)
 return max;
 ```
 
+### 20. Count subarrays with given xor k
+> [Link](https://takeuforward.org/plus/dsa/problems/count-subarrays-with-given-xor-k)
+
+```
+1. Make a Hashmap and add (0, 1)
+2. Iterate a loop over the array and then keep a track of running xor
+3. If x = (xor ^ k) exists then add it to count
+4. If xor exist in the HashMap then increase the count of not add it
+```
+
+```java
+int n = nums.length, xor = 0, cnt = 0, x = 0;
+HashMap<Integer, Integer> map = new HashMap<>();
+map.put(0,1);
+for(int i=0; i<n; i++)
+{
+    xor = xor ^ nums[i];
+    x = xor ^ k;
+    if(map.containsKey(x)) cnt += map.get(x);
+    if(map.containsKey(xor)) map.put(xor, map.get(xor) + 1);
+    else map.put(xor, 1);
+}
+return cnt;
+```
+
 ### 21. Merge Intervals (Medium)
 > [Link](https://leetcode.com/problems/merge-intervals/) - Leetcode 56
 
@@ -649,14 +674,10 @@ return max;
 ```java
 int n = intervals.length;
 if(n == 1) return intervals;
-
 Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-
 List<int[]> result = new ArrayList<>();
-
 int start = intervals[0][0];
 int end = intervals[0][1];
-
 for(int i=1; i<n; i++)
 {
     if(intervals[i][0] <= end) end = Math.max(end, intervals[i][1]);
@@ -667,7 +688,29 @@ for(int i=1; i<n; i++)
         end = intervals[i][1];
     }
 }
-
 result.add(new int[]{start, end});
 return result.toArray(new int[result.size()][]);
+```
+
+### 22. Merge Sorted Array (Easy)
+> [Link](https://leetcode.com/problems/merge-sorted-array/) - Leetcode 88
+
+```
+1. Make 3 pointers for nums1, nums2 and full length of k = nums1 + nums2
+2. Iterate from the end of nums1 and nums2
+3. If number at nums1 is greater then place that at pointer k and reduce the k and i pointer
+4. If not then place that at pointer k and reduce the k and j pointer
+5. Place the rest of the leftover elements from nums2 in nums1 and reduce the k and j pointer
+```
+
+```java
+int i = m-1;
+int j = n-1;
+int k = m+n-1;
+while(i >= 0 && j >= 0)
+{
+    if(nums1[i] > nums2[j]) nums1[k--] = nums1[i--];
+    else nums1[k--] = nums2[j--];
+}
+while(j >= 0) nums1[k--] = nums2[j--];
 ```
