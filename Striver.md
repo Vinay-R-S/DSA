@@ -714,3 +714,105 @@ while(i >= 0 && j >= 0)
 }
 while(j >= 0) nums1[k--] = nums2[j--];
 ```
+
+### 24. Count Invesrion (Hard)
+> [Link](https://takeuforward.org/plus/dsa/problems/count-inversions)
+
+```
+1. Using Merge Sort logic
+2. Use recursion to split the array in half using mergeSort() function
+3. Then Before Applying merge() function check for numbers[i] > nums[j] and increae the count and then merge
+```
+
+```java
+public long cnt = 0;
+public void merge(int nums[], int p, int q, int r)
+{
+    int j = q + 1;
+    for(int i = p; i <= q; i++)
+    {
+        while(j <= r && nums[i] > nums[j]) j++;
+        cnt += (j - (q + 1));
+    }
+    int nL = q - p + 1;
+    int nR = r - q;
+    int L[] = new int[nL];
+    int R[] = new int[nR];
+    for(int i = 0; i < nL; i++) L[i] = nums[p + i];
+    for(int i = 0; i < nR; i++) R[i] = nums[q + i + 1];
+    int i = 0, k = p;
+    j = 0;
+    while(i < nL && j < nR)
+    {
+        if(L[i] <= R[j]) nums[k++] = L[i++];
+        else nums[k++] = R[j++];
+    }
+    while(i < nL) nums[k++] = L[i++];
+    while(j < nR) nums[k++] = R[j++];
+}
+public void mergeSort(int nums[], int p, int r)
+{
+    if(p >= r) return;
+    int q = p + (r - p)/2;
+    mergeSort(nums, p, q);
+    mergeSort(nums, q+1, r);
+    merge(nums, p, q, r);
+}
+public long numberOfInversions(int[] nums) 
+{
+    int n = nums.length;
+    mergeSort(nums, 0, n-1);
+    return cnt;
+}
+```
+
+### 24. Reverse Pairs (Hard)
+> [Link](https://leetcode.com/problems/reverse-pairs/) - Leetcode 493
+
+```
+1. Using Merge Sort logic
+2. Use recursion to split the array in half using mergeSort() function
+3. Then Before Applying merge() function check for numbers[i] > 2L * nums[j] and increae the count and then merge
+```
+
+```java
+public int cnt = 0;
+public void merge(int nums[], int p, int q, int r)
+{
+    int j = q + 1;
+    for(int i = p; i <= q; i++)
+    {
+        while(j <= r && (long)nums[i] > 2L * nums[j]) j++;
+        cnt += (j - (q + 1));
+    }
+    int nL = q - p + 1;
+    int nR = r - q;
+    int L[] = new int[nL];
+    int R[] = new int[nR];
+    for(int i = 0; i < nL; i++) L[i] = nums[p + i];
+    for(int i = 0; i < nR; i++) R[i] = nums[q + i + 1];
+    int i = 0, k = p;
+    j = 0;
+    while(i < nL && j < nR)
+    {
+        if(L[i] <= R[j]) nums[k++] = L[i++];
+        else nums[k++] = R[j++];
+    }
+    while(i < nL) nums[k++] = L[i++];
+    while(j < nR) nums[k++] = R[j++];
+}
+public void mergeSort(int nums[], int p, int r)
+{
+    if(p >= r) return;
+    int q = p + (r - p)/2;
+    mergeSort(nums, p, q);
+    mergeSort(nums, q+1, r);
+    merge(nums, p, q, r);
+}
+public long numberOfInversions(int[] nums) 
+{
+    int n = nums.length;
+    mergeSort(nums, 0, n-1);
+    return cnt;
+}
+```
