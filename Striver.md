@@ -715,6 +715,49 @@ while(i >= 0 && j >= 0)
 while(j >= 0) nums1[k--] = nums2[j--];
 ```
 
+### 23. Find the missing and repeating number
+> [Link](https://takeuforward.org/plus/dsa/problems/find-the-repeating-and-missing-number)
+
+```
+1. Find the sum of n natural numbers from 1 to n and find the sum of the elements in the array
+2. Find the sum of square of n natural numbers from 1 to n and find the sum of sqaure of elements in the array
+3. Equation 1: x - y = sumOfArrayElements - sumOfNaturalNumbers
+4. Equation 2: x^2 - y^2 = sumOfSquareofArrayElements - sumOfSquareofNaturalNumbers
+5. Math equation 
+   (x - y) = a -> eq1
+   (x - y) * (x + y) = b -> eq2
+   To get (x + y) = eq2/eq1
+   We have two equation now
+   (x + y) = a
+   (x - y) = b
+
+   add both 2x = a + b
+   so x = (a + b)/2
+   y = x - b
+```
+
+```java
+long n = nums.length, sum = 0, sqrSum = 0;
+long realSum = (n * (n+1))/2;
+long realSqrSum = (n * (n+1) * (2*n+1))/6;
+for(int i=0; i<n; i++) 
+{
+    sum += nums[i];
+    sqrSum += (long)nums[i] * (long)nums[i];
+}
+// x is repeating number
+// y is missing number
+// (x - y) = sumOfNautralNumbers - Real-sumOfNautralNumbers
+// (x^2 - y^2) = sumOfSquareOfNaturalNumbers - Real-sumOfSquareOfNaturalNumbers
+long eq1 = sum - realSum; // (x - y)
+long eq2 = sqrSum - realSqrSum; // (x - y) * (x + y)
+eq2 = eq2/eq1;
+long x = (eq1 + eq2)/2;
+long y = x - eq1;
+int ans[] = {(int)x, (int)y};
+return ans;
+```
+
 ### 24. Count Invesrion (Hard)
 > [Link](https://takeuforward.org/plus/dsa/problems/count-inversions)
 
@@ -766,7 +809,7 @@ public long numberOfInversions(int[] nums)
 }
 ```
 
-### 24. Reverse Pairs (Hard)
+### 25. Reverse Pairs (Hard)
 > [Link](https://leetcode.com/problems/reverse-pairs/) - Leetcode 493
 
 ```
@@ -815,4 +858,33 @@ public long numberOfInversions(int[] nums)
     mergeSort(nums, 0, n-1);
     return cnt;
 }
+```
+
+### 26. Maximum Product Subarray (Medium)
+> [Link](https://leetcode.com/problems/maximum-product-subarray/) - Leetcode 152
+
+```
+1. Modified Kadanes algorithm
+2. Find both running max and min using Kadanes algoritm
+3. If u encounter a -ve number then swap the min and max
+4. Keep checking for finalMax in each iteration
+```
+
+```java
+int max = nums[0];
+int min = nums[0];
+int ans = nums[0];
+for(int i=1; i<nums.length; i++)
+{
+    if(nums[i] < 0)
+    {
+        int temp = max;
+        max = min;
+        min = temp;
+    }
+    max = Math.max(nums[i], max * nums[i]);
+    min = Math.min(nums[i], min * nums[i]);
+    ans = Math.max(ans, max);
+}
+return ans;
 ```
