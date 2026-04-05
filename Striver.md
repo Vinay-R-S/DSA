@@ -637,7 +637,7 @@ for(int i=0; i<n; i++)
 return max;
 ```
 
-### 20. Count subarrays with given xor k
+### 20. Count subarrays with given xor k (Hard)
 > [Link](https://takeuforward.org/plus/dsa/problems/count-subarrays-with-given-xor-k)
 
 ```
@@ -715,7 +715,7 @@ while(i >= 0 && j >= 0)
 while(j >= 0) nums1[k--] = nums2[j--];
 ```
 
-### 23. Find the missing and repeating number
+### 23. Find the missing and repeating number (Hard)
 > [Link](https://takeuforward.org/plus/dsa/problems/find-the-repeating-and-missing-number)
 
 ```
@@ -885,6 +885,87 @@ for(int i=1; i<nums.length; i++)
     max = Math.max(nums[i], max * nums[i]);
     min = Math.min(nums[i], min * nums[i]);
     ans = Math.max(ans, max);
+}
+return ans;
+```
+
+## Binary Search
+
+### 1. Binary Search (Easy)
+> [Link](https://leetcode.com/problems/binary-search/) - Leetcode 704
+
+```
+1. Keep left and right pointers, and mid pointer as 0
+2. Loop while left <= right, Find mid = left + (right - left)/2
+3. Check if number at mid is equal to target then return the mid
+4. If number at mid is greater then target shift the right pointer to mid - 1
+5. If number at mid is smaller then target shift the left pointer to mid + 1
+6. Else return -1
+```
+
+```java
+int n = nums.length;
+int left = 0, right = n-1, mid = 0;
+while(left <= right)
+{
+    mid = left + (right - left)/2;
+    if(nums[mid] == target) return mid;
+    else if(nums[mid] > target) right = mid-1;
+    else left = mid+1;
+}
+return -1;
+```
+
+### 2. Lower Bound (Easy)
+> [Link](https://takeuforward.org/plus/dsa/problems/lower-bound)
+
+```
+1. Make left = 0, right = n-1 and mid pointer with another variable as ans to store the index of lower bound
+2. Loop while left <= right, Find mid = left + (right - left)/2
+3. Check if number at mid >= target then update the ans to mid and right to mid - 1
+4. Else if number at mid is < target then update left to mid + 1
+5. Return ans
+```
+
+```java
+int n = nums.length;
+int left = 0, right = n-1, mid = 0, ans = 0;
+while(left <= right)
+{
+    mid = left + (right - left)/2;
+    if(nums[mid] >= x) 
+    {
+        ans = mid;
+        right = mid - 1;
+    }
+    else left = mid + 1;
+}
+return ans;
+```
+
+### 3. Upper Bound (Easy)
+> [Link](https://takeuforward.org/plus/dsa/problems/upper-bound)
+
+```
+1. Make left = 0, right = n-1 and mid pointer with another variable as ans to store the index of lower bound
+2. Loop while left <= right, Find mid = left + (right - left)/2
+3. Check if number at mid > target then update the ans to mid and right to mid - 1
+4. Else if number at mid is < target then update left to mid + 1
+5. Return ans
+```
+
+```java
+int n = nums.length;
+int left = 0, right = n-1, mid = 0, ans = 0;
+while(left <= right)
+{
+    mid = left + (right - left)/2;
+    if(nums[mid] > x) 
+    {
+        ans = mid;
+        right = mid - 1;
+    }
+    else left = mid + 1;
 }
 return ans;
 ```
