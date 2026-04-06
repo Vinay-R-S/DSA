@@ -969,3 +969,30 @@ while(left <= right)
 }
 return ans;
 ```
+
+### 4. Search Insert Position (Easy)
+> [Link](https://leetcode.com/problems/search-insert-position/) - Leetcode 35
+
+```
+1. Make left = 0, right = n-1 and mid pointer with another variable as ans with value as n
+2. Loop while left <= right, Find mid = left + (right - left)/2
+3. Check if number at mid >= target then update the ans to mid and right to mid - 1
+4. Else if number at mid is < target then update left to mid + 1
+5. Return ans
+```
+
+```java
+int n = nums.length, left = 0, right = n-1, mid = 0, ans = n;
+while(left <= right)
+{
+    mid = left + (right - left)/2;
+    if(nums[mid] >= target) 
+    {
+        ans = mid;
+        right = mid - 1;
+    }
+    else left = mid + 1;
+}
+return ans;
+```
+
