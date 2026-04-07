@@ -996,3 +996,42 @@ while(left <= right)
 return ans;
 ```
 
+### 6. Find First and Last Position of Element in Sorted array (Medium)
+> [Link](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) - Leetcode 34
+
+```
+1. Make three pointers left, right and mid and an array to store the index of First and Last occurance of target
+2. Use Binary search to find the First occurance by moving left of the target
+3. Use Binary search to find the Last occurance by moving right of the target
+4. Return the index's
+```
+
+```java
+int n = nums.length, left = 0, right = n-1, mid = 0;
+int res[] = {-1, -1};
+while(left <= right)
+{
+    mid = left + (right - left)/2;
+    if(nums[mid] == target)
+    {
+        res[0] = mid;
+        right = mid - 1;
+    }
+    else if(nums[mid] > target) right = mid - 1;
+    else left = mid + 1;
+}  
+left = 0;
+right = n-1;
+while(left <= right)
+{
+    mid = left + (right - left)/2;
+    if(nums[mid] == target)
+    {
+        res[1] = mid;
+        left = mid + 1;
+    }
+    else if(nums[mid] > target) right = mid - 1;
+    else left = mid + 1;
+}
+return res;
+```
