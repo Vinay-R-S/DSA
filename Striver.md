@@ -1035,3 +1035,38 @@ while(left <= right)
 }
 return res;
 ```
+
+### 8. Search in Rotated sorted array (Medium)
+> [Link](https://leetcode.com/problems/search-in-rotated-sorted-array) - Leetcode 33
+
+```
+1. Make low, high and mid pointers
+2. Apply Binary search logic
+3. Find the value for mid pointer and check for target if found return the index
+4. If the number at low <= number at mid
+   Check if the number at low <= target and target < number at mid then shift the high pointer
+   Else shift the low pointer
+5. Else 
+   Check the number at mid < target and target <= number at high then shift the low pointer
+   Else shift the high pointer
+```
+
+```java
+int n = nums.length, low = 0, high = n-1, mid = 0;
+while(low <= high) 
+{
+    mid = low + (high - low) / 2;
+    if(nums[mid] == target) return mid;
+    if(nums[low] <= nums[mid]) 
+    {
+        if(nums[low] <= target && target < nums[mid]) high = mid - 1;
+        else low = mid + 1;
+    } 
+    else 
+    {
+        if(nums[mid] < target && target <= nums[high]) low = mid + 1;
+        else high = mid - 1;
+    }
+}
+return -1;
+```
