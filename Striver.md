@@ -1070,3 +1070,32 @@ while(low <= high)
 }
 return -1;
 ```
+
+### 11. Minimum in the Rotated Sorted Array (Medium)
+> [Link](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) - Leetcode 153
+
+```
+1. Make three pointers, low = 0, high = n-1, and mid = 0
+2. Find mid and check for
+3. Number at low <= Number at mid then find the minimum number between ans and low and update the low
+4. Number at low > Number at mid then find the minimum number between ans and high and update the high
+```
+
+```java
+int n = nums.length, low = 0, high = n-1, mid = 0, ans = Integer.MAX_VALUE;
+while(low <= high)    
+{
+    mid = low + (high - low)/2;
+    if(nums[low] <= nums[mid])
+    {
+        ans = Math.min(ans, nums[low]);
+        low = mid + 1;
+    }
+    else 
+    {
+        ans = Math.min(ans, nums[mid]);
+        high = mid - 1;
+    }
+}
+return ans;
+```
