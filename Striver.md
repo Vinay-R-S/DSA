@@ -533,8 +533,8 @@ return ans;
 1. Sort the array
 2. Iterate through the array
 3. Pick an element and pick left and right pointers (After that element)
-4. Use Binary search to find the 3rd number so that the sum = 0 if so add this 3 numbers to the List
-5. Skip the 
+4. Use Binary search kinda logic to find the 3rd number so that the sum = 0 if so add this 3 numbers to the List
+5. Skip the duplicates in the Binary search for left and right pointers
 ```
 
 ```java
@@ -1036,6 +1036,55 @@ while(left <= right)
 return res;
 ```
 
+### 7. Count Occurrences of an Element in a Sorted Array (Medium)
+> [Link](https://takeuforward.org/plus/dsa/problems/count-occurrences-of-an-element-in-a-sorted-array)
+
+```
+1. Make three pointers left, right and mid and an array to store the index of First and Last occurance of target
+2. Use Binary search to find the First occurance by moving left of the target
+3. Use Binary search to find the Last occurance by moving right of the target
+4. Return the index's and check if the returned values are not -1 else return -1
+5. Return high - low + 1
+```
+
+```java
+// lowIdx function
+int n = nums.length, low = 0, mid = 0, high = n-1, x = -1;
+while(low <= high)
+{
+    mid = low + (high - low);
+    if(nums[mid] == target)
+    {
+        x = mid;
+        high = mid - 1;
+    }
+    else if(nums[mid] > target) high = mid - 1;
+    else low = mid + 1;
+}
+return x;
+
+// highIdx function
+int n = nums.length, low = 0, mid = 0, high = n-1, x = -1;
+while(low <= high)
+{
+    mid = low + (high - low);
+    if(nums[mid] == target)
+    {
+        x = mid;
+        low = mid + 1;
+    }
+    else if(nums[mid] > target) high = mid - 1;
+    else low = mid + 1;
+}
+return x;
+
+// Main function
+int low = lowIdx(nums, target);
+int high = highIdx(nums, target);
+if(low == -1 && high == -1) return -1;
+return high - low + 1;
+```
+
 ### 8. Search in Rotated sorted array (Medium)
 > [Link](https://leetcode.com/problems/search-in-rotated-sorted-array) - Leetcode 33
 
@@ -1055,7 +1104,7 @@ return res;
 int n = nums.length, low = 0, high = n-1, mid = 0;
 while(low <= high) 
 {
-    mid = low + (high - low) / 2;
+    mid = low + (high - low)/2;
     if(nums[mid] == target) return mid;
     if(nums[low] <= nums[mid]) 
     {
@@ -1071,7 +1120,48 @@ while(low <= high)
 return -1;
 ```
 
-### 11. Minimum in the Rotated Sorted Array (Medium)
+### 9. Search in Rotated sorted array II (Medium)
+> [Link](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) - Leetcode 81
+
+```
+1. Make low, high and mid pointers
+2. Apply Binary search logic
+3. Find the value for mid pointer and check for target if found return the index
+4. If the number at low <= number at mid
+   Check if the number at low <= target and target < number at mid then shift the high pointer
+   Else shift the low pointer
+5. Else 
+   Check the number at mid < target and target <= number at high then shift the low pointer
+   Else shift the high pointer
+6. If the number at low == number at mid == number at high then shift the low and high pointers
+```
+
+```java
+int n = nums.length, low = 0, high = n-1, mid = 0;
+while(low <= high) 
+{
+    mid = low + (high - low)/2;
+    if(nums[mid] == target) return true;
+    if(nums[low] == nums[mid] && nums[mid] == nums[high]) 
+    {
+        low++;
+        high--;
+    }
+    else if(nums[low] <= nums[mid]) 
+    {
+        if(nums[low] <= target && target < nums[mid]) high = mid - 1;
+        else low = mid + 1;
+    } 
+    else 
+    {
+        if(nums[mid] < target && target <= nums[high]) low = mid + 1;
+        else high = mid - 1;
+    }
+}
+return false;
+```
+
+### 10. Minimum in the Rotated Sorted Array (Medium)
 > [Link](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) - Leetcode 153
 
 ```
