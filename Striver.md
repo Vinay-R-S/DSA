@@ -1189,3 +1189,35 @@ while(low <= high)
 }
 return ans;
 ```
+
+### 12. Single Element in a Sorted array (Medium)
+> [Link](https://leetcode.com/problems/single-element-in-a-sorted-array/) - Leetcode 540
+
+```
+1. Check the extremes for duplicates
+2. Take three pointers, low, high and mid
+3. Use while loop (left <= right) and calculate mid
+4. Check if number at (mid - 1) != mid != (mid + 1) then return the number
+5. Else check if mid is odd and (mid-1) == (mid) [OR] mid is even and (mid) == (mid+1) then shift low
+6. Else shift high
+```
+
+```java
+int n = nums.length;
+
+if(n == 1) return nums[0];
+if(nums[0] != nums[1]) return nums[0];
+if(nums[n-1] != nums[n-2]) return nums[n-1];
+
+int low = 1, high = n-2, mid = 0;
+
+while(low <= high)
+{
+    mid = low + (high - low)/2;
+
+    if(nums[mid-1] != nums[mid] && nums[mid+1] != nums[mid]) return nums[mid];                
+    else if(mid%2 == 1 && nums[mid-1] == nums[mid] || mid%2 == 0 && nums[mid] == nums[mid+1]) low = mid+1; 
+    else high = mid-1;
+}
+return -1;
+```
