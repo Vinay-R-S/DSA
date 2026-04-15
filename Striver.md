@@ -1190,6 +1190,34 @@ while(low <= high)
 return ans;
 ```
 
+### 11. Find out how many times the array is rotated (Easy)
+> [Link](https://takeuforward.org/plus/dsa/problems/find-out-how-many-times-the-array-is-rotated)
+
+```
+1. Make three pointers low, mid, high
+2. Loop while left <= right, find mid
+3. Check if low = high return low
+4. Check if mid > 0 [AND] number at mid < number at mid-1 return mid
+5. Check if mid < n-1 [AND] number at mid > number at mid+1 return mid+1
+6. Check if number at mid >= number at low then shift the low
+7. Else shift the high
+```
+
+```java
+int n = nums.size(), low = 0, high = n - 1;
+while(low <= high)
+{
+    if(nums.get(low) <= nums.get(high)) return low;
+
+    int mid = low + (high - low)/2;
+    if(mid > 0 && nums.get(mid) < nums.get(mid-1)) return mid;
+    if(mid < n-1 && nums.get(mid) > nums.get(mid+1)) return mid + 1;
+    if(nums.get(mid) >= nums.get(low)) low = mid+1; 
+    else high = mid-1;
+}
+return 0;
+```
+
 ### 12. Single Element in a Sorted array (Medium)
 > [Link](https://leetcode.com/problems/single-element-in-a-sorted-array/) - Leetcode 540
 
