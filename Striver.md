@@ -1221,3 +1221,28 @@ while(low <= high)
 }
 return -1;
 ```
+
+### 13. Find peak element (Medium)
+> [Link](https://leetcode.com/problems/find-peak-element/) - Leetcode 162
+
+```
+1. Make the three pointers low, high and mid
+2. If size is 1 then return 0, if not
+3. Use loop while low <= high and find mid
+4. If (mid = 0 [OR] number at mid > number at mid-1) [AND] (mid = high [OR] number at mid >= number at mid+1) return mid
+5. Else mid > 0 [AND] number at mid-1 > number at mid then move high
+6. Else move low
+```
+
+```java
+int n = nums.length, low = 0, high = n-1, mid = 0;
+if(n == 1) return 0;
+while(low <= high)
+{
+    mid = low + (high - low)/2;
+    if((mid == 0 || nums[mid] >= nums[mid - 1]) && (mid == high || nums[mid] >= nums[mid + 1])) return mid;
+    else if(mid > 0 && nums[mid - 1] > nums[mid]) high = mid-1;
+    else low = mid+1;
+}
+return -1;
+```
