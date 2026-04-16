@@ -1274,3 +1274,56 @@ while(low <= high)
 }
 return -1;
 ```
+
+### 14. Find Square of a number
+> [Link](https://takeuforward.org/plus/dsa/problems/find-square-root-of-a-number)
+
+```
+````
+
+```java
+```
+
+### 15. Find Nth root of a number
+> [Link](https://takeuforward.org/plus/dsa/problems/find-nth-root-of-a-number)
+
+```
+````
+
+```java
+```
+
+### 16. Koko eating bananas (Medium)
+> [Link](https://leetcode.com/problems/koko-eating-bananas/) - Leetcode 875
+
+```
+1. Make three pointers, low, k, high
+2. Find the max and initialize high to max
+3. Loop while low <= high, find the k (max bananas which can be finished in an hour)
+4. Count the total hours to finish the pile and break if count > h (hours given)
+5. If count <= h then store the value of k and shift the high
+6. Else shift the low
+```
+
+```java
+int low = 1, high = 0, ans = 0, k = 0, cnt = 0;
+for(int pile : piles) high = Math.max(high, pile);
+ans = high;
+while(low <= high)
+{
+    k = low + (high - low)/2;
+    cnt = 0;
+    for(int pile : piles)
+    {
+        cnt += (pile + k - 1)/k;
+        if(cnt > h) break;
+    }
+    if(cnt <= h)
+    {
+        ans = k;
+        high = k - 1;
+    }
+    else low = k + 1;
+}
+return ans;
+```
