@@ -1327,3 +1327,60 @@ while(low <= high)
 }
 return ans;
 ```
+
+### 17. Minimum Number of Days to Make m Bouquets (Medium)
+> [Link](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/) - Leetcode 1482
+
+```
+1. Make three pointers, low, mid, high
+2. Find the max and initialize high to max
+3. Loop while low <= high, find the mid
+4. Check if the number of bouquets can be made in mid days
+5. If yes then store the value of mid and shift the high
+6. Else shift the low
+```
+
+```java
+public static boolean checkPossibility(int[] bloomDay, int day, int m, int k) 
+{
+    int count = 0, bouquets = 0; 
+    for(int bloom : bloomDay) 
+    {
+        if(bloom <= day) 
+        {
+            count++; 
+            if(count == k) 
+            {
+                bouquets++; 
+                count = 0; 
+            }
+        } 
+        else count = 0; 
+    }
+    return bouquets >= m; 
+}
+
+public int minDays(int[] bloomDay, int m, int k) 
+{
+    long required = (long) m * k;
+    if(required > bloomDay.length) return -1; 
+    int minDay = Integer.MAX_VALUE, maxDay = Integer.MIN_VALUE;
+    for(int bloom : bloomDay) 
+    {
+        minDay = Math.min(minDay, bloom);
+        maxDay = Math.max(maxDay, bloom);
+    }
+    int low = minDay, high = maxDay, result = -1;
+    while(low <= high) 
+    {
+        int mid = (low + high)/2;
+        if(checkPossibility(bloomDay, mid, m, k)) 
+        {
+            result = mid; 
+            high = mid - 1;
+        } 
+        else low = mid + 1; 
+    }
+    return result;
+}
+```
