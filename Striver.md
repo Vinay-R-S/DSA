@@ -1276,21 +1276,60 @@ return -1;
 ```
 
 ### 14. Find Square of a number
-> [Link](https://takeuforward.org/plus/dsa/problems/find-square-root-of-a-number)
+> [Link](https://leetcode.com/problems/sqrtx) - Leetcode 69
 
 ```
-````
+1. Take low = 0, mid = 0, high = x and do binary search
+2. Move right -> mid if the mid * mid is greater then x
+3. Move left -> mid if the mid * mid is lesser then x
+4. If mid * mid == x then return ans or return ans
+5. Take care of overflow so use long
+```
 
 ```java
+long left = 0, right = x, mid = 0, ans = 0;
+while(left <= right)
+{
+    mid = left + (right - left)/2;
+    if(mid * mid == x) return (int)mid;
+    else if(mid * mid > x) right = mid - 1;
+    else
+    {
+        ans = mid;
+        left = mid + 1;
+    }
+}
+return (int)ans;
 ```
 
 ### 15. Find Nth root of a number
 > [Link](https://takeuforward.org/plus/dsa/problems/find-nth-root-of-a-number)
 
 ```
-````
+1. Keep low = 1, high = M, mid = 0, p = 1
+2. Find the mid and check if mid ^ N is equal to M then return
+3. If greater then move the right -> mid
+4. If lesser then move the left -> mid
+5. Else return -1
+```
 
 ```java
+long low = 1, high = M, mid = 0, p = 1;
+if(M == 1) return 1;
+while(low <= high)
+{
+    mid = low + (high - low)/2;
+    p = 1;
+    for(int i=1; i<=N; i++)
+    {
+        p *= mid;
+        if(p > M) break;
+    }
+    if(p == M) return (int) mid;
+    else if(p > M) high = mid - 1;
+    else low = mid + 1;
+}
+return -1;
 ```
 
 ### 16. Koko eating bananas (Medium)
