@@ -1454,3 +1454,54 @@ while(low <= high)
 return low;
 ```
 
+### 19. Capacity to ship packages within D days
+> [Link](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) - Leetcode 1011
+
+```
+1. Take low = max_weight, mid = 0, high = summation_weightsm, ans = 0
+2. Use binary search and find mid, use the helper function to get the number of days to ship the loads
+3. If cnt > days in the helper then break and return cnt and shift the low -> mid since we need to ship in less days so increase the capacity
+4. If cnt <= days in the helper then return cnt and shift the high -> mid since there is scope to finish the process fast
+5. Return the ans
+```
+
+```java
+public int helper(int wt[], int n, int days, int cap)
+{
+    int sum = 0, cnt = 1;
+    for(int i=0; i<n; i++)
+    {
+        sum += wt[i];
+        if(sum > cap)
+        {
+            cnt++;
+            sum = wt[i];
+        }
+        if(cnt > days) break;
+    }
+    return cnt;
+}
+
+public int shipWithinDays(int[] weights, int days)
+{
+    int n = weights.length, low = 0, mid = 0, high = 0, ans = 0, cnt = 0;
+    for(int i : weights) 
+    {
+        low = Math.max(low, i);
+        high += i;
+    }
+    while(low <= high)
+    {
+        cnt = 0;
+        mid = low + (high - low)/2;
+        cnt = helper(weights, n, days, mid);
+        if(cnt > days) low = mid + 1;
+        else 
+        {
+            ans = mid;
+            high = mid - 1;
+        }
+    }
+    return ans;
+}
+```
