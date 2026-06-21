@@ -1423,3 +1423,34 @@ public int minDays(int[] bloomDay, int m, int k)
     return result;
 }
 ```
+
+### 18. Find the smallest divisor (Medium)
+> [Link](https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/) - Leetcode 1283
+
+```
+1. Take low = 0, mid = 0, high = max value in the array
+2. Apply binary search and find the mid
+3. Find the sum of the all the number divison using the mid as the divisor
+4. Keep track of sum and threshold, left -> mid if the sum is greater then threshold
+5. Shift right -> mid if the sum <= threshold
+6. Return the low value
+```
+
+```java
+int n = nums.length, low = 1, mid = 0, high = 0, sum = 0;
+for(int i : nums) high = Math.max(high, i);
+while(low <= high)
+{
+    sum = 0;
+    mid = low + (high - low)/2;
+    for(int i : nums) 
+    {
+        if(sum > threshold) break;
+        sum += Math.ceil((i + mid - 1)/mid);
+    }
+    if(sum <= threshold) high = mid - 1;
+    else low = mid + 1;
+}
+return low;
+```
+
