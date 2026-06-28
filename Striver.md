@@ -1505,3 +1505,168 @@ public int shipWithinDays(int[] weights, int days)
     return ans;
 }
 ```
+
+### 20. Kth missing Positive number
+[Link](https://leetcode.com/problems/kth-missing-positive-number/) - Leetcode 1539
+
+```
+1. Make three pointers, low, mid, high
+2. Use binary search and find mid and missing (missing is number at idx - idx since the array will be sorted we will get to kn how many missing numbers are there)
+3. If missing < k then shift the low -> mid since we need to find the kth missing number
+4. If missing <= k then shift the high -> mid since there is scope to find the kth missing number
+5. Return the ans
+```
+
+```java
+int n = arr.length, low = 0, mid = 0, high = n-1, missing = 0;
+while(low <= high)
+{
+    mid = low + (high - low)/2;
+    missing = arr[mid] - (mid + 1);
+    if(missing < k) low = mid + 1;
+    else high = mid - 1;
+}
+return low + k;
+```
+
+### 21. Aggressive cows
+[Link](https://takeuforward.org/plus/dsa/problems/aggressive-cows)
+
+```
+1. Make three pointers, low, mid, high
+2. Use binary search and find mid
+3. Use the placeCow function to find if the cows can be placed in the given distance
+4. If can place in mid then shift the high -> mid since there is scope to place in less distance
+5. If cannot place in mid then shift the low -> mid since we need to place in more distance
+6. Return the ans
+```
+
+```java
+public boolean placeCow(int nums[], int k, int dist)
+{
+    int n = nums.length, last = nums[0], cnt = 1;
+    for(int i=0; i<n; i++)
+    {
+        if(nums[i] - last >= dist)
+        {
+            cnt++;
+            last = nums[i];
+        }
+        if(cnt >= k) return true;
+    }
+    return false;
+}
+public int aggressiveCows(int[] nums, int k) 
+{
+    Arrays.sort(nums);
+    int n = nums.length, low = 1, mid = 0, high = nums[n-1] - nums[0];
+    boolean flag = false;
+    while(low <= high)
+    {
+        mid = low + (high - low);
+        flag = placeCow(nums, k, mid);
+        if(flag) low = mid + 1;
+        else high = mid - 1;
+    }
+    return high;
+}
+```
+
+### 22. Book Allocation Problem
+[Link](https://takeuforward.org/plus/dsa/problems/book-allocation-problem)
+
+```
+1. Make three pointers, low, mid, high
+2. Use binary search and find mid
+3. Use the allocateBook function to check if the number of pages can be allocated
+4. If can allocate in mid then shift the high -> mid since there is scope to allocate in less pages
+5. If cannot allocate in mid then shift the low -> mid since we need to allocate in more pages
+6. Return the ans
+```
+
+```java
+public boolean allocateBook(int nums[], int k, int pages)
+{
+    int n = nums.length, cnt = 1, sum = 0;
+    for(int i=0; i<n; i++)    
+    {
+        if(sum + nums[i] > pages)
+        {
+            cnt++;
+            sum = 0;
+        }
+        sum += nums[i];
+        if(cnt > k) return false;
+    }
+    return true;
+}
+public int findPages(int[] nums, int m) 
+{
+    int n = nums.length, low = 1, mid = 0, high = 0, sum = 0;
+    boolean flag = true;
+    if(n < m) return -1;
+    for(int i : nums)
+    {
+        low = Math.max(low, i);
+        sum += i;
+    }
+    high = sum;
+    while(low <= high)
+    {
+        mid = low + (high - low)/2;
+        flag = allocateBook(nums, m, mid);
+        if(flag) high = mid - 1;
+        else low = mid + 1;
+    }
+    return low;
+}
+```
+
+### 23. Split Array largest sum
+[Link](https://leetcode.com/problems/split-array-largest-sum/) - Leetcode 410
+
+```
+1. Make three pointers, low, mid, high
+2. Use binary search and find mid
+3. Use the checkSplit function to check if the sum can be allocated
+4. If can allocate in mid then shift the high -> mid since there is scope to allocate in less pages
+5. If cannot allocate in mid then shift the low -> mid since we need to allocate in more pages
+6. Return the ans
+```
+
+```java
+public boolean checkSplit(int nums[], int k, int largeSum)
+{
+    int n = nums.length, cnt = 1, sum = 0;
+    for(int i=0; i<n; i++)
+    {
+        if(sum + nums[i] > largeSum)
+        {
+            cnt++;
+            sum = 0;
+        }
+        sum += nums[i];
+        if(cnt > k) return false;
+    }
+    return true;
+}
+
+public int splitArray(int[] nums, int k) 
+{
+    int n = nums.length, low = nums[0], mid = 0, high = 0;
+    boolean flag = true;
+    for(int i : nums) 
+    {
+        low = Math.max(low, i);
+        high += i;
+    }
+    while(low <= high)
+    {
+        mid = low + (high - low)/2;
+        flag = checkSplit(nums, k, mid);
+        if(flag) high = mid - 1; 
+        else low = mid + 1;
+    }
+    return low;
+}
+```
