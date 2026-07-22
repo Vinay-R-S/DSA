@@ -1275,7 +1275,7 @@ while(low <= high)
 return -1;
 ```
 
-### 14. Find Square of a number
+### 14. Find Square of a number (Medium)
 > [Link](https://leetcode.com/problems/sqrtx) - Leetcode 69
 
 ```
@@ -1302,7 +1302,7 @@ while(left <= right)
 return (int)ans;
 ```
 
-### 15. Find Nth root of a number
+### 15. Find Nth root of a number (Medium)
 > [Link](https://takeuforward.org/plus/dsa/problems/find-nth-root-of-a-number)
 
 ```
@@ -1454,7 +1454,7 @@ while(low <= high)
 return low;
 ```
 
-### 19. Capacity to ship packages within D days
+### 19. Capacity to ship packages within D days (Medium)
 > [Link](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) - Leetcode 1011
 
 ```
@@ -1481,7 +1481,6 @@ public int helper(int wt[], int n, int days, int cap)
     }
     return cnt;
 }
-
 public int shipWithinDays(int[] weights, int days)
 {
     int n = weights.length, low = 0, mid = 0, high = 0, ans = 0, cnt = 0;
@@ -1506,7 +1505,7 @@ public int shipWithinDays(int[] weights, int days)
 }
 ```
 
-### 20. Kth missing Positive number
+### 20. Kth missing Positive number (Medium)
 [Link](https://leetcode.com/problems/kth-missing-positive-number/) - Leetcode 1539
 
 ```
@@ -1529,7 +1528,7 @@ while(low <= high)
 return low + k;
 ```
 
-### 21. Aggressive cows
+### 21. Aggressive cows (Hard)
 [Link](https://takeuforward.org/plus/dsa/problems/aggressive-cows)
 
 ```
@@ -1572,7 +1571,7 @@ public int aggressiveCows(int[] nums, int k)
 }
 ```
 
-### 22. Book Allocation Problem
+### 22. Book Allocation Problem (Hard)
 [Link](https://takeuforward.org/plus/dsa/problems/book-allocation-problem)
 
 ```
@@ -1622,7 +1621,7 @@ public int findPages(int[] nums, int m)
 }
 ```
 
-### 23. Split Array largest sum
+### 23. Split Array largest sum (hard)
 [Link](https://leetcode.com/problems/split-array-largest-sum/) - Leetcode 410
 
 ```
@@ -1666,6 +1665,308 @@ public int splitArray(int[] nums, int k)
         flag = checkSplit(nums, k, mid);
         if(flag) high = mid - 1; 
         else low = mid + 1;
+    }
+    return low;
+}
+```
+
+### 24. Painters Partition Problem (Medium)
+[Link](https://www.interviewbit.com/problems/painters-partition-problem/)
+
+```
+1. Make three pointers, low, mid, high
+2. Use binary search and find mid
+3. Use the helper function to check if the time can be allocated
+4. If can allocate in mid then shift the high -> mid since there is scope to allocate in less time
+5. If cannot allocate in mid then shift the low -> mid since we need to allocate in more time
+6. Return the ans
+```
+
+```java
+public boolean helper(int board[], long A, long B, long mid)
+{
+    long n = board.length, sum = 0, cnt = 1;
+    for(int i=0; i<n; i++)
+    {
+        if(sum + board[i] * B > mid)
+        {
+            cnt++;
+            sum = 0;
+        }
+        sum += (long)board[i] * B;
+        if(cnt > A) return false;
+    }
+    return true;
+}
+public int paint(int A, int B, int[] C) 
+{
+    int n = C.length;
+    long low = 0, mid = 0, high = 0, mod = 10000003;
+    for(int i : C) 
+    {
+        low = Math.max(low, (long)i * B);
+        high += (long)i * B;
+    }
+    while(low <= high)
+    {
+        mid = low + (high - low)/2;
+        if(helper(C, A, B, mid)) high = mid - 1;
+        else low = mid + 1;
+    }
+    return (int)(low % mod);
+}
+```
+
+### 25. Minimize Max distance between Gas station (Hard)
+[Link](https://takeuforward.org/plus/dsa/problems/minimise-max-distance-to-gas-stations)
+
+```
+Pending
+```
+
+```java
+Pending
+```
+
+### 26. Median of Two Sorted Arrays (Medium)
+[Link](https://leetcode.com/problems/median-of-two-sorted-arrays/) - Leetcode 4
+
+```
+1. Main logic to find the Median is to split the both array's into two parts such that this left1 <= right2 && left2 <= right1
+2. So use binary search using low, mid and high pointers to find the cut index
+3. cut1 from array1 using normal mid
+4. cut2 from array2 using (total elements + 1)/2 - cut1
+5. find the l1 and l2 value and r1 and r2
+6. Compare them for median and return the value based on the even or odd length
+7. Shift to right if the l1 > r2 or else shift to left
+```
+
+```java
+public double medianLogic(int nums1[], int nums2[])
+{
+    int n1 = nums1.length, n2 = nums2.length;
+    int low = 0, high = n1, cut1 = 0, cut2 = 0, l1 = 0, l2 = 0, r1 = 0, r2 = 0;
+    boolean flag = (n1 + n2)%2 == 0 ? true : false;
+    while(low <= high)
+    {
+        cut1 = low + (high - low)/2;
+        cut2 = (n1 + n2 + 1)/2 - cut1;
+        l1 = cut1 == 0 ? Integer.MIN_VALUE : nums1[cut1-1];
+        l2 = cut2 == 0 ? Integer.MIN_VALUE : nums2[cut2-1];
+        r1 = cut1 == n1 ? Integer.MAX_VALUE : nums1[cut1];
+        r2 = cut2 == n2 ? Integer.MAX_VALUE : nums2[cut2];
+        if(l1 <= r2 && l2 <= r1)
+        {
+            if(flag) return ((double)Math.max(l1, l2) + (double)Math.min(r1, r2))/2.0;
+            else return (double)Math.max(l1, l2);
+        }
+        else if(l1 > r2) high = cut1 - 1;
+        else low = cut1 + 1;
+    }
+    return 0.0;
+}
+public double findMedianSortedArrays(int[] nums1, int[] nums2) 
+{
+    if(nums1.length <= nums2.length) return medianLogic(nums1, nums2);
+    else return medianLogic(nums2, nums1);
+}
+```
+
+### 27. Kth element of 2 sorted arrays (Medium)
+[Link](https://takeuforward.org/plus/dsa/problems/kth-element-of-2-sorted-arrays)
+
+```
+1. 
+```
+
+```java
+public int helper(int a[], int b[], int k)
+{
+    int n1 = a.length, n2 = b.length;
+    int l1 = 0, l2 = 0, r1 = 0, r2 = 0, cut1 = 0, cut2 = 0, low = Math.max(0, k - n2), high = Math.min(k, n1);
+    while(low <= high)
+    {
+        cut1 = low + (high - low)/2;
+        cut2 = k - cut1;
+        l1 = cut1 == 0 ? Integer.MIN_VALUE : a[cut1-1];
+        l2 = cut2 == 0 ? Integer.MIN_VALUE : b[cut2-1];
+        r1 = cut1 == n1 ? Integer.MAX_VALUE : a[cut1];
+        r2 = cut2 == n2 ? Integer.MAX_VALUE : b[cut2];
+        if(l1 <= r2 && l2 <= r1) return Math.max(l1, l2);
+        else if(l1 > r2) high = cut1 - 1;
+        else low = cut1 + 1;
+    }
+
+    return -1;
+}
+public int kthElement(int[] a, int[] b, int k) 
+{
+    int n1 = a.length, n2 = b.length;
+    if(n1 <= n2) return helper(a, b, k);
+    return helper(b, a, k);
+}
+```
+
+### 28. Find row with maximum 1's
+[Link](https://takeuforward.org/plus/dsa/problems/find-row-with-maximum-1's)
+
+```
+1. Find the idx where we find the 1st occurance of 1 in the give row array and return the total length (size of array) - idx (if idx is -1) return -1 using binary search
+2. So find this for all rows and keep track max value and row index and return the idx at the end if not then -1
+```
+
+```java
+public int firstOccurance(int arr[])
+{
+    int n = arr.length, low = 0, mid = 0, high = n-1, ans = -1;
+    while(low <= high)
+    {
+        mid = low + (high - low)/2;
+        if(arr[mid] == 1)
+        {
+            ans = mid;
+            high = mid - 1;
+        }
+        else if(arr[mid] < 1) low = mid + 1;
+        else high = mid - 1;
+    }
+    if(ans == -1) return -1;
+    return n - ans;
+}
+public int rowWithMax1s(int[][] mat) 
+{
+    int n = mat.length, max = 0, cnt1 = 0, idx = -1;
+    for(int i=0; i<n; i++) 
+    {
+        cnt1 = firstOccurance(mat[i]);
+        if(max < cnt1)
+        {
+            max = cnt1;
+            idx = i;
+        }
+    }
+    return idx;
+}
+```
+
+
+### 29. Search in a 2D matrix
+[Link](https://leetcode.com/problems/search-a-2d-matrix/) - Leetcode 74
+
+```
+1. Simple binary search using math to simulate a flattened array
+2. Low, mid and high find the mid and then to get the row idex and column index use (mid/m) and (mid%m) respectively
+```
+
+```java
+int n = matrix.length, m = matrix[0].length, st = 0, end = (m*n) - 1, mid = 0, midElement = 0;
+while(st <= end)
+{
+    mid = st + (end - st)/2;
+    midElement = matrix[mid/m][mid%m];
+    if(midElement == target) return true;
+    else if(midElement > target) end = mid - 1;
+    else st = mid + 1;
+}
+return false;
+```
+
+### 30. Search in a 2D matrix - II (Hard)
+[Link](https://leetcode.com/problems/search-a-2d-matrix-ii/) - Leetcode 240
+
+```
+1. Since the 2D matrix has each rows and cols sorted we can start from the top right corner and traverse accordingly
+2. If the target element is greater then the current element shift down if smaller then shift left
+```
+
+```java
+int n = matrix.length, m = matrix[0].length, i = 0, j = m - 1;
+while(i < n && j >= 0)
+{
+    if(matrix[i][j] == target) return true;
+    else if(target < matrix[i][j]) j--;
+    else i++;
+}
+return false;
+```
+
+
+### 31. Find Peak Element - II (Medium)
+[Link](https://leetcode.com/problems/find-a-peak-element-ii/) - Leetcode 1901
+
+```
+1. This is brute force approach, there is an optimized binary search approach 
+2. Where we find the mid column and find max in that column and check the neighbours (left and right) if the condition doesnt match we shift to that column which has max number in the neighbours
+3. Repeat this for row also and we will find the peak element
+4. Binary search will reduce the search space 
+```
+
+```java
+int r = mat.length, c = mat[0].length, max = 0;
+int arr[] = new int[2];
+boolean flag = true;
+for(int i=0; i<r; i++)
+{
+    for(int j=0; j<c; j++)
+    {
+        flag = true;
+        max = mat[i][j];
+        if(i > 0) if(max <= mat[i-1][j]) flag = false;
+        if(i < r-1) if(max <= mat[i+1][j]) flag = false;
+        if(j > 0) if(max <= mat[i][j-1]) flag = false;
+        if(j < c-1) if(max <= mat[i][j+1]) flag = false;
+        if(flag)
+        {
+            arr[0] = i;
+            arr[1] = j;
+            return arr;
+        }
+    }
+}
+return arr;
+```
+
+### 32. Matrix Median (Hard)
+[Link](https://takeuforward.org/plus/dsa/problems/matrix-median)
+
+```
+1. The core logic to find the median is to guess a number as a median and then get the count of elements where the elements are <= median since the rows are sorted we are using the binary search to find
+2. Binary search to guess a median number from the range [1, maxNumberInMatrix]
+3. Use a helper function to find the upper bound using binary search at each row for this guessed number and get the total count
+4. cnt <= size/2 (size here is row * col) shift left else shift right
+5. Return low since that will be the median
+```
+
+```java
+public int countBefore(int mat[][], int k, int c)
+{
+    int low = 0, high = c-1, mid = 0, cnt = 0;
+    for(int i[] : mat)
+    {
+        low = 0;
+        high = c-1;
+        mid = 0;
+        while(low <= high)
+        {
+            mid = low + (high - low)/2;
+
+            if(i[mid] > k) high = mid - 1;
+            else low = mid + 1;
+        }
+        cnt += low;
+    }
+    return cnt;
+}
+public int findMedian(int[][] mat) 
+{
+    int r = mat.length, c = mat[0].length, low = 1, high = mat[0][0], mid = 0, size = r * c, cnt = 0;
+    for(int i=0; i<r; i++) high = Math.max(high, mat[i][c-1]);
+    while(low <= high)
+    {
+        mid = low + (high - low)/2;
+        cnt = countBefore(mat, mid, c);
+        if(cnt <= size/2) low = mid + 1;
+        else high = mid - 1;
     }
     return low;
 }
