@@ -1506,7 +1506,7 @@ public int shipWithinDays(int[] weights, int days)
 ```
 
 ### 20. Kth missing Positive number (Medium)
-[Link](https://leetcode.com/problems/kth-missing-positive-number/) - Leetcode 1539
+> [Link](https://leetcode.com/problems/kth-missing-positive-number/) - Leetcode 1539
 
 ```
 1. Make three pointers, low, mid, high
@@ -1529,7 +1529,7 @@ return low + k;
 ```
 
 ### 21. Aggressive cows (Hard)
-[Link](https://takeuforward.org/plus/dsa/problems/aggressive-cows)
+> [Link](https://takeuforward.org/plus/dsa/problems/aggressive-cows)
 
 ```
 1. Make three pointers, low, mid, high
@@ -1572,7 +1572,7 @@ public int aggressiveCows(int[] nums, int k)
 ```
 
 ### 22. Book Allocation Problem (Hard)
-[Link](https://takeuforward.org/plus/dsa/problems/book-allocation-problem)
+> [Link](https://takeuforward.org/plus/dsa/problems/book-allocation-problem)
 
 ```
 1. Make three pointers, low, mid, high
@@ -1622,7 +1622,7 @@ public int findPages(int[] nums, int m)
 ```
 
 ### 23. Split Array largest sum (hard)
-[Link](https://leetcode.com/problems/split-array-largest-sum/) - Leetcode 410
+> [Link](https://leetcode.com/problems/split-array-largest-sum/) - Leetcode 410
 
 ```
 1. Make three pointers, low, mid, high
@@ -1671,7 +1671,7 @@ public int splitArray(int[] nums, int k)
 ```
 
 ### 24. Painters Partition Problem (Medium)
-[Link](https://www.interviewbit.com/problems/painters-partition-problem/)
+> [Link](https://www.interviewbit.com/problems/painters-partition-problem/)
 
 ```
 1. Make three pointers, low, mid, high
@@ -1718,7 +1718,7 @@ public int paint(int A, int B, int[] C)
 ```
 
 ### 25. Minimize Max distance between Gas station (Hard)
-[Link](https://takeuforward.org/plus/dsa/problems/minimise-max-distance-to-gas-stations)
+> [Link](https://takeuforward.org/plus/dsa/problems/minimise-max-distance-to-gas-stations)
 
 ```
 Pending
@@ -1729,7 +1729,7 @@ Pending
 ```
 
 ### 26. Median of Two Sorted Arrays (Medium)
-[Link](https://leetcode.com/problems/median-of-two-sorted-arrays/) - Leetcode 4
+> [Link](https://leetcode.com/problems/median-of-two-sorted-arrays/) - Leetcode 4
 
 ```
 1. Main logic to find the Median is to split the both array's into two parts such that this left1 <= right2 && left2 <= right1
@@ -1773,7 +1773,7 @@ public double findMedianSortedArrays(int[] nums1, int[] nums2)
 ```
 
 ### 27. Kth element of 2 sorted arrays (Medium)
-[Link](https://takeuforward.org/plus/dsa/problems/kth-element-of-2-sorted-arrays)
+> [Link](https://takeuforward.org/plus/dsa/problems/kth-element-of-2-sorted-arrays)
 
 ```
 1. 
@@ -1808,7 +1808,7 @@ public int kthElement(int[] a, int[] b, int k)
 ```
 
 ### 28. Find row with maximum 1's
-[Link](https://takeuforward.org/plus/dsa/problems/find-row-with-maximum-1's)
+> [Link](https://takeuforward.org/plus/dsa/problems/find-row-with-maximum-1's)
 
 ```
 1. Find the idx where we find the 1st occurance of 1 in the give row array and return the total length (size of array) - idx (if idx is -1) return -1 using binary search
@@ -1851,7 +1851,7 @@ public int rowWithMax1s(int[][] mat)
 
 
 ### 29. Search in a 2D matrix
-[Link](https://leetcode.com/problems/search-a-2d-matrix/) - Leetcode 74
+> [Link](https://leetcode.com/problems/search-a-2d-matrix/) - Leetcode 74
 
 ```
 1. Simple binary search using math to simulate a flattened array
@@ -1872,7 +1872,7 @@ return false;
 ```
 
 ### 30. Search in a 2D matrix - II (Hard)
-[Link](https://leetcode.com/problems/search-a-2d-matrix-ii/) - Leetcode 240
+> [Link](https://leetcode.com/problems/search-a-2d-matrix-ii/) - Leetcode 240
 
 ```
 1. Since the 2D matrix has each rows and cols sorted we can start from the top right corner and traverse accordingly
@@ -1892,7 +1892,7 @@ return false;
 
 
 ### 31. Find Peak Element - II (Medium)
-[Link](https://leetcode.com/problems/find-a-peak-element-ii/) - Leetcode 1901
+> [Link](https://leetcode.com/problems/find-a-peak-element-ii/) - Leetcode 1901
 
 ```
 1. This is brute force approach, there is an optimized binary search approach 
@@ -1927,7 +1927,7 @@ return arr;
 ```
 
 ### 32. Matrix Median (Hard)
-[Link](https://takeuforward.org/plus/dsa/problems/matrix-median)
+> [Link](https://takeuforward.org/plus/dsa/problems/matrix-median)
 
 ```
 1. The core logic to find the median is to guess a number as a median and then get the count of elements where the elements are <= median since the rows are sorted we are using the binary search to find
@@ -1970,4 +1970,349 @@ public int findMedian(int[][] mat)
     }
     return low;
 }
+```
+
+## Strings
+
+### 1. Remove Outermost Parentheses (Easy)
+> [Link](https://leetcode.com/problems/remove-outermost-parentheses/) - Leetcode 1021
+
+```
+1. Can be solved using Stack and without Stack also (Below solution is faster non-stack solution)
+2. Traverse through the string as character by character
+3. Check if its open parantheses bracket if so check the depth is depth > 0 then we have already taken care of the outer parentheses so take the copy of character
+4. If depth is 0 then its outer most parantheses so we should skip it and not store in the array
+5. If the character is close parantheses bracket then reduce the depth and check the depth > 0 then copy the character or else it will be the outermost paranthese so ignore it
+```
+
+```java
+int n = s.length(), idx = 0, depth = 0;
+char str[] = s.toCharArray();
+char ans[] = new char[n];
+
+for(char x : str)
+{
+    if(x == '(')
+    {
+        if(depth > 0) ans[idx++] = x;
+        depth++;
+    }
+    else 
+    {
+        depth--;
+        if(depth > 0) ans[idx++] = x;
+    }
+}
+
+return new String(ans, 0, idx);
+```
+
+### 2. Reverse Words in a String (Medium)
+> [Link](https://leetcode.com/problems/reverse-words-in-a-string/) - Leetcode 151
+
+```
+1. Convert the String to char array and then use 2 pointers to reconstruct the string with no spaces at start and end and just a single space in between words
+2. Use 2 pointers, p2 to read the character if any non-space then write it to p1, else skip all space till you get a non-space for this p2 pointer
+3. Check if p2 still inside the string range if so add a space at pointer p1
+4. Once we cross the string length using p2 then our cleaned string length is p1 (p1 is next idx of the last character)
+5. Reverse the whole string
+6. Reverse each word one by one in this new cleaned reversed string
+7. Return the string of length len
+```
+
+```java
+public void reverse(char str[], int p1, int p2)
+{
+    char temp;
+    while(p1 < p2)
+    {
+        temp = str[p1];
+        str[p1] = str[p2];
+        str[p2] = temp;
+        p1++;
+        p2--;
+    }
+}
+public String reverseWords(String s)
+{
+    char str[] = s.toCharArray();
+    int n = str.length;
+    int p1 = 0, p2 = 0;
+    char temp;
+    while(p2 < n)
+    {
+        if(str[p2] != ' ') str[p1++] = str[p2++];
+        else
+        {
+            while(p2 < n && str[p2] == ' ') p2++;
+            if(p1 > 0 && p2 < n) str[p1++] = ' ';
+        }
+    }
+    int len = p1;
+    reverse(str, 0, len-1);
+    p1 = 0;
+    p2 = 0;
+    while(p2 <= len)
+    {
+        while(p2 < len && str[p2] != ' ') p2++;
+        reverse(str, p1, p2 - 1);
+        p2++;
+        p1 = p2;
+    }
+    return new String(str, 0, len);
+}
+```
+
+### 3. Largest Odd Number in String (Easy)
+> [Link](https://leetcode.com/problems/largest-odd-number-in-string/) - Leetcode 1903
+
+```
+1. Iterate from the max index and if any odd number is encountered then store the index and break from the loop and return the substring from 0 to index + 1
+```
+
+```java
+int n = num.length();
+boolean flag = false;
+char x = ' ';
+String res = "";
+for(int i=n-1; i>=0; i--)    
+{
+    x = num.charAt(i);
+    switch(x)
+    {
+        case '1':
+            res = num.substring(0, i+1);
+            flag = true;
+            break;
+        case '3':
+            res = num.substring(0, i+1);
+            flag = true;
+            break;
+        case '5':
+            res = num.substring(0, i+1);
+            flag = true;
+            break;
+        case '7':
+            res = num.substring(0, i+1);
+            flag = true;
+            break;
+        case '9':
+            res = num.substring(0, i+1);
+            flag = true;
+            break;
+    }
+    if(flag) break;
+}
+
+return res;
+```
+
+### 4. Longest Common Prefix (Easy)
+> [Link](https://leetcode.com/problems/longest-common-prefix/) - Leetcode 14
+
+```
+1. Either find the smallest word and run the loop for that smallest word length [or]
+2. Take the 1st word and use the letters from it and check the same index in other words of the string if present then append it to the result and go to next index character from the 1st word.
+```
+
+```java
+int n = strs.length, a = strs[0].length();
+boolean flag = false; char x = ' ';
+StringBuilder res = new StringBuilder("");
+for(int i=0; i<a; i++)
+{
+    x = strs[0].charAt(i);
+    for(String s : strs)
+    {
+        if(i < s.length() && s.charAt(i) == x) continue;
+        else 
+        {
+            flag = true;
+            break;
+        }
+    }
+    if(flag) break;
+    else res.append(x);
+}
+return res.toString();
+```
+
+### 5. Isomorphic Strings (Easy)
+> [Link](https://leetcode.com/problems/isomorphic-strings/) - Leetcode 205
+
+```
+1. We have to map character from String s to character of String t in bidirectional mapping
+2. So the main condition to check for proper mapping if a -> b and b -> a so when we encounter some other character (x) mapping to b we should check does b map to that character (x) or not if it doesnt map to (x) and it maps to some other character lets say (a) then they are not isomorphic strings
+3. So check this is the main condition if(freq1[c1 - 0] != '\u0000' && freq1[c1 - 0] != c2 || freq2[c2 - 0] != '\u0000' && freq2[c2 - 0] != c1)
+4. (a !-> null && a !-> b || b !-> null && b !-> a)
+```
+
+```java
+int n = s.length();
+char freq1[] = new char[256];
+char freq2[] = new char[256];
+char c1 = ' ', c2 = ' ';
+for(int i=0; i<n; i++)
+{
+    c1 = s.charAt(i);
+    c2 = t.charAt(i);
+    if(freq1[c1 - 0] != '\u0000' && freq1[c1 - 0] != c2 || freq2[c2 - 0] != '\u0000' && freq2[c2 - 0] != c1 ) return false;
+    freq1[c1 - 0] = c2;
+    freq2[c2 - 0] = c1;
+}
+return true;
+```
+
+### 6. Rotate String (Easy)
+> [Link](https://leetcode.com/problems/rotate-string/) - Leetcode 796
+
+```
+1. Append the same string to itself 
+2. Then make substring and check at the start of each index till the start index + size of the target string
+```
+
+```java
+if(s.length() != goal.length()) return false;
+String con = s + s;
+int n = goal.length();
+for(int i=0; i<n; i++) if((con.substring(i,i+n)).compareTo(goal) == 0) return true;
+return false;
+```
+
+### 7. Valid Anagram (Easy)
+> [Link](https://leetcode.com/problems/valid-anagram/) - Leetcode 242
+
+```
+1. Make two separate frequency map for the characters in Source String and Target String
+2. Check that frequency of each character from both the frequency map if all of them match then the are valid anagram or else not
+```
+
+```java
+int len1 = s.length();
+int len2 = t.length();
+if(len1 != len2) return false;
+int map[] = new int[26];
+for(int i=0; i<len1; i++)
+{
+    int num = s.charAt(i) - 'a';
+    map[num]++;
+}
+for(int i=0; i<len2; i++)
+{
+    int num = t.charAt(i) - 'a';
+    map[num]--;
+}
+for(int i=0; i<26; i++) if(map[i] != 0) return false;
+return true;
+```
+
+### 8. Sort Characters by frequency (Easy)
+> [Link](https://leetcode.com/problems/sort-characters-by-frequency/) - Leetcode 451
+
+```
+1. Map a 2D frequency array of size 128 since the string can have lower case, upper case and digits only 
+2. Store ASCII value as Int at idx 0 and cnt of the character at idx 1 in 2D Matrix
+3. After building the frequency array sort the 2D map array in descending order based on the frequency values (idx 1)
+4. Rebuild the String using this 2D map
+```
+
+```java
+char str[] = s.toCharArray();
+int n = str.length, idx = 0;
+int map[][] = new int[128][2]; // 0 -> ascci int value && 1 -> freq cnt
+for(int i=0; i<128; i++) map[i][0] = i;
+for(char x : str) map[x - 0][1]++;
+Arrays.sort(map, (a, b) -> Integer.compare(b[1], a[1]));
+for(int i=0; i<128; i++) 
+{
+    while(map[i][1] > 0)
+    {
+        str[idx++] = (char)(map[i][0]);
+        map[i][1]--;
+    }
+}
+return new String(str);
+```
+
+### 9. Maximum Nesting Depth of the Parentheses (Easy)
+> [Link](https://leetcode.com/problems/maximum-nesting-depth-of-the-parentheses/) - Leetcode 1614
+
+```
+1. Since the question explicity says valid paratheses string so we need not worry about the edge cases
+2. If we encounter a open parantheses bracket then increase the depth count and update the max_depth
+3. If we encounter a close parantheses bracket then decrease the depth count and in the end return the max_depth
+```
+
+```java
+int n = s.length(), depth = 0, max_depth = 0;
+char str[] = s.toCharArray();
+for(int i=0; i<n; i++)
+{
+    if(str[i] == '(') 
+    {
+        depth++;
+        max_depth = Math.max(max_depth, depth);
+    }
+    else if(str[i] == ')') depth--;
+    else continue;
+}
+return max_depth;
+```
+
+### 10. Roman to Integer (Easy)
+> [Link](https://leetcode.com/problems/roman-to-integer/) - Leetcode 13
+
+```
+1. Build a function to map Roman characters to their respective numbers
+2. Iterate through the Roman String character by character and get the Int value of for character at current and next index
+3. If Int value of current idx character is > Int value of next idx character then add (current) it to result
+4. If Int value of current idx character is > Int value of next idx character then subtract (current) it from result
+5. If a lower value number is before higher value then subtract (current value) or else add (current value)
+```
+
+```java
+public int getIntFromRoman(char x)
+{
+    switch(x)
+    {
+        case 'I': 
+            return 1;
+        case 'V': 
+            return 5;
+        case 'X': 
+            return 10;
+        case 'L': 
+            return 50;
+        case 'C': 
+            return 100;
+        case 'D': 
+            return 500;
+        case 'M': 
+            return 1000;
+    }
+    return 0;
+}
+public int romanToInt(String s) 
+{
+    int n = s.length(), curr = 0, next = 0, res = 0;
+    for(int i=0; i<n-1; i++)
+    {
+        curr = getIntFromRoman(s.charAt(i));
+        next = getIntFromRoman(s.charAt(i+1));
+
+        if(curr < next) res -= curr;
+        else res += curr;
+    }
+    res += getIntFromRoman(s.charAt(n-1));
+    return res;
+}
+```
+
+### 11. String to Integer (atoi) (Medium)
+> [Link](https://leetcode.com/problems/string-to-integer-atoi/) - Leetcode 8
+
+```
+```
+
+```java
 ```
