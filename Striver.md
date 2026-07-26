@@ -190,7 +190,7 @@ return maxProfit;
 1. Find the index of the element which is smaller then the next element from the right side
 2. If no index is -1 then return the reversed array
 3. If element present then find the element which is just greater then number at index from the right side
-4. Swap the elements and then reverse the array on on the right side of index + 1
+4. Swap the elements and then reverse the array on the right side of index + 1
 ```
 
 ```java
@@ -2312,7 +2312,45 @@ public int romanToInt(String s)
 > [Link](https://leetcode.com/problems/string-to-integer-atoi/) - Leetcode 8
 
 ```
+Pending
 ```
 
 ```java
+Pending
+```
+
+### 13. Largest Palindromic Substring (Medium)
+> [Link](https://leetcode.com/problems/longest-palindromic-substring/) - Leetcode 5
+
+```
+1. Here we use expand from middle and check for palindrome concept rather then find substrings and check for palindrome
+2. Use a while loop to iterate from idx 0 to n-1 (here i is nothing but the assumed center of the possible palindrome)
+3. Check if we can expand the center to the right side (possible Even length palindrome as well as skip duplicates)
+4. Update the value of i for efficient palindrome substring checks
+5. Expand left and right making sure pointers are within the string index range and characters are matching
+6. Update the start pointer (sp) and end pointer (end) if the new palindrome index difference is greater
+7. Return the substring from index `sp` to `end+1`
+```
+
+```java
+int n = s.length(), i = 0, j = 0, sp = 0, end = 0, left = 0, right = 0;
+char str[] = s.toCharArray();
+while(i < n)
+{
+    left = i;
+    right = i;
+    while(right + 1 < n && str[right + 1] == str[i]) right++;
+    i = right + 1;
+    while((left - 1) >= 0 && (right + 1) < n && str[left - 1] == str[right + 1])
+    {
+        left--;
+        right++;
+    }
+    if(right - left > end - sp)
+    {
+        sp = left;
+        end = right;
+    }
+}
+return s.substring(sp, end+1);
 ```
