@@ -2319,6 +2319,38 @@ Pending
 Pending
 ```
 
+### 12. Count Number of Substrings (Medium)
+> [Link](https://leetcode.com/problems/count-number-of-homogenous-substrings/) - Leetcode 1759
+
+```
+Note: A string is homogenous if all the characters of the string are the same. A substring is a contiguous sequence of characters within a string. This is a medium varient of count number of substring
+
+1. We have to count all the possible substring which can be constructed using either the individual or contiguous characters
+2. Basically take a copy of char at idx 0 and store it in 'x' and then iterate through the loop and increase the count if contiguous duplicate occurs for char stored in 'x'
+3. If not increase the sum by the number of substrings possible from this count and reset the count to 1 and 'x' to new char at current idx
+4. Mod before you find the substring count and after adding it to sum also Mod once again to avoid overflow
+5. Once outside the loop repeat the step 3 and 4 for last char which is not calculated inside the loop
+```
+
+```java
+int n = s.length(), cnt = 1;
+long sum = 0, MOD = 1000000007;
+char arr[] = s.toCharArray();
+char x = arr[0];
+for(int i=1; i<n; i++) 
+{
+    if(arr[i] == x) cnt++;
+    else 
+    {
+        sum = (sum + (long)(cnt * (cnt+1)/2)) % MOD;
+        x = arr[i];
+        cnt = 1;
+    }
+}
+sum = (sum + (long)(cnt * (cnt+1)/2)) % MOD;
+return (int)sum;
+```
+
 ### 13. Largest Palindromic Substring (Medium)
 > [Link](https://leetcode.com/problems/longest-palindromic-substring/) - Leetcode 5
 
@@ -2353,4 +2385,899 @@ while(i < n)
     }
 }
 return s.substring(sp, end+1);
+```
+
+### 14. Sum of Beauty of All Substrings (Medium)
+> [Link](https://leetcode.com/problems/sum-of-beauty-of-all-substrings/) - Leetcode 1781
+
+```
+1. Iterate through all substrings and keep a freq array (Rolling frequency array) for each substring
+2. After each update in frequency array check for the max and min frequency of the character and update the sum (since we have to check for each character)
+```
+
+```java
+int n = s.length(), sum = 0, start = 0, idx = 0, max = 0, min = 501;
+char str[] = s.toCharArray();
+for(int i=0; i<n; i++)
+{
+    int map[] = new int[26];
+    for(int j=i; j<n; j++) 
+    {
+        idx = str[j] - 'a';
+        map[idx]++;
+        max = 0;
+        min = 501;
+        for(int k=0; k<26; k++)
+        {
+            if(map[k] > 0)
+            {
+                max = Math.max(max, map[k]);
+                min = Math.min(min, map[k]);
+            }
+        }
+        sum += max - min;
+    }       
+}
+return sum;
+```
+
+### 15. Reverse Words in a String (Medium)
+> [Link](https://leetcode.com/problems/reverse-words-in-a-string/) - Leetcode 151
+
+```
+1. Remove the extra whitespace in the start and in between words using 2 pointers
+2. Keep p1 and p2 pointer, Loop till p2 covers the whole string, if character != whitespace then write it to p1 and shift both the p1 and p2
+3. If not shift the p2 while there are duplicate whitespaces and within the String length 'n'
+4. If p1 greater then idx 0 && p2 is still under the String length (we have encountered a new word so add a whitespace) then write a whitespace at idx p1 and shift it
+5. Keep the idx copy as len for the new processed string
+6. Reverese the characters in this new string till the len idx
+7. Run a while loop and reverse each words, since we can detect the words based on the whitespace (from preprocessed string)
+```
+
+```java
+public void reverse(char str[], int p1, int p2)
+{
+    char temp;
+    while(p1 < p2)
+    {
+        temp = str[p1];
+        str[p1] = str[p2];
+        str[p2] = temp;
+        p1++;
+        p2--;
+    }
+}
+public String reverseWords(String s)
+{
+    char str[] = s.toCharArray();
+    int n = str.length;
+    int p1 = 0, p2 = 0;
+    char temp;
+    while(p2 < n)
+    {
+        if(str[p2] != ' ') str[p1++] = str[p2++];
+        else
+        {
+            while(p2 < n && str[p2] == ' ') p2++;
+            if(p1 > 0 && p2 < n) str[p1++] = ' ';
+        }
+    }
+    int len = p1;
+    for(int i=0; i<len/2; i++)
+    {
+        temp = str[i];
+        str[i] = str[len-i-1];
+        str[len-i-1] = temp;
+    }
+    p1 = 0;
+    p2 = 0;
+    while(p2 <= len)
+    {
+        while(p2 < len && str[p2] != ' ') p2++;
+        reverse(str, p1, p2 - 1);
+        p2++;
+        p1 = p2;
+    }
+    return new String(str, 0, len);
+}
+```
+
+## Linked List
+
+### 1. Reverse Doubly Linked List (Medium)
+> [Link](https://takeuforward.org/plus/dsa/problems/reverse-a-doubly-linked-list/)
+
+```
+1. Logic 1: Swap the prev and next of each node
+2. Logic 2: Use two pointers and keep them at extreme and swap the values and then shift the pointer nodes towards each other
+```
+
+```java
+// Logic 1
+if(head == null || head.next == null) return head;
+ListNode p1 = head, p2 = null;
+while(p1 != null) 
+{
+    p2 = p1.prev;
+    p1.prev = p1.next;
+    p1.next = p2;
+    p1 = p1.prev;
+}
+return p2.prev;
+
+// Logic 2
+ListNode p1 = head, p2 = head;
+while(p2.next != null) p2 = p2.next;
+int temp = 0;
+while(p1 != p2)
+{
+    temp = p1.data;
+    p1.data = p2.data;
+    p2.data = temp;
+    p1 = p1.next;
+    p2 = p2.prev;
+}
+return head;
+```
+
+### 2. Middle of the Linked List (Easy)
+> [Link](https://leetcode.com/problems/middle-of-the-linked-list/) - Leetcode 876
+
+```
+1. Use fast and slow pointer 
+2. Iterate while fast != null and check for fast.next == null inside the loop if true return the slow from inside the loop [or] return slow outside
+3. We have to return the Second middle node if the length is even so it is handled above
+```
+
+```java
+ListNode fast = head, slow = head;
+while(fast != null)
+{
+    if(fast.next == null) return slow;
+    else 
+    {
+        fast = fast.next.next;
+        slow = slow.next;
+    }
+}
+return slow;
+```
+
+### 3. Reverse Linked List (Easy)
+> [Link](https://leetcode.com/problems/reverse-linked-list/) - Leetcode 206
+
+```
+1. Use three pointer node approach to keep track of Previous, Current and Next node (assign the next inside the loop as Current.next)
+2. Current.next = Previous
+3. Previous = Current
+4. Current = Next
+```
+
+```java
+if(head == null) return head;
+else 
+{
+    ListNode pr = null, cu = head, nx = null;
+    while(cu != null)
+    {
+        nx = cu.next;
+        cu.next = pr;
+        pr = cu;
+        cu = nx;
+    }
+    return pr;
+}
+```
+
+### 4. Linked List Cycle (Easy)
+> [Link](https://leetcode.com/problems/linked-list-cycle/) - Leetcode 141
+
+```
+1. Keep fast and slow pointer for the Linked List
+2. Loop while fast != null && fast.next != null
+3. Update the fast and slow pointer by 2 and 1 jumps respectively
+4. If any point fast == slow then loop exsits or else no
+```
+
+```java
+if(head == null || head.next == null) return false;
+ListNode fast = head, slow = head;
+while(fast != null && fast.next != null)
+{
+    fast = fast.next.next;
+    slow = slow.next;
+    if(fast == slow) return true;         
+}
+return false;
+```
+
+### 5. Linked List Cycle II (Medium)
+> [Link](https://leetcode.com/problems/linked-list-cycle-ii/) - Leetcode 142
+
+```
+1. Find for loop in the Linked List using the fast and slow poiner using the above code
+2. Check if the fast == null or fast.next == null if so no loop return null
+3. If loop is present take a temp variable and iterate till the temp and slow are pointing to the same node (so this is the node where the cycle starts)
+```
+
+```java
+if(head == null) return head;
+ListNode fast = head;
+ListNode slow = head;
+while(fast != null && fast.next != null)
+{
+    slow = slow.next;
+    fast = fast.next.next;
+    if(fast == slow) break;
+}
+if(fast == null || fast.next == null) return null;
+ListNode temp = head;
+while(temp != null)
+{
+    if(temp == slow) return temp;
+    temp = temp.next;
+    slow = slow.next;
+}
+return null;
+```
+
+### 6. Length of Loop in Linked List (Medium)
+> [Link](https://takeuforward.org/plus/dsa/problems/length-of-loop-in-ll)
+
+```
+1. Find for loops using fast and slow pointer if no then return 0
+2. If loop exists then use the temp pointer till we reach the slow pointer after parallel run (So we get the node where the loop starts)
+3. Reset the temp to this node and loop till we temp.next == slow and keep the count of nodes and return the count
+```
+
+```java
+if(head == null || head.next == null) return 0;
+ListNode fast = head, slow = head, temp = head;
+boolean flag = false;
+while(fast != null && fast.next != null)
+{
+    slow = slow.next;
+    fast = fast.next.next;
+    if(slow == fast) 
+    {
+        flag = true;
+        break;
+    }
+}
+if(!flag) return 0;
+while(temp != null)
+{
+    if(temp == slow) break;
+    temp = temp.next;
+    slow = slow.next;
+}   
+int cnt = 1;
+temp = slow;
+while(temp.next != slow)
+{
+    temp = temp.next;
+    cnt++;
+}
+return cnt;
+```
+
+### 7. Palindrome Linked List (Easy)
+> [Link](https://leetcode.com/problems/palindrome-linked-list/) - Leetcode 234
+
+```
+1. Core logic is to find the mid node and reverse the all the nodes after this mid.
+2. And use two pointers one at the head (p1) and one at the reversed Linked List head (p2) and check the for values
+3. Return false if different values
+4. Return true if same we reach end of Linked List for p2
+```
+
+```java
+public ListNode reverse(ListNode head)
+{
+    ListNode pr = null, cu = head, nx = null;
+    while(cu != null)
+    {
+        nx = cu.next;
+        cu.next = pr;
+        pr = cu;
+        cu = nx;
+    }
+    return pr;
+}
+public ListNode midNode(ListNode head)
+{
+    ListNode fast = head, slow = head, prev = null;
+    while(fast != null)
+    {
+        fast = fast.next.next;
+        prev = slow;
+        slow = slow.next;
+        if(fast == null) return prev;
+        if(fast.next == null) return slow;
+    }
+    return slow;
+}
+public boolean isPalindrome(ListNode head) 
+{
+    if(head.next == null) return true;
+    else 
+    {
+        ListNode tempHead= head;
+        ListNode mid = midNode(head);
+        ListNode temp = reverse(mid.next);
+        mid.next = temp;
+        while(temp != null)
+        {
+            if(tempHead.val == temp.val) 
+            {
+                tempHead = tempHead.next;
+                temp = temp.next;
+            }
+            else return false;
+        }
+        return true;
+    }
+}
+```
+
+### 8. Odd Even Linked List (Medium)
+> [Link](https://leetcode.com/problems/odd-even-linked-list/) - Leetcode 328
+
+```
+1. Two pointer approach
+2. Take pointer odd, even and evenHead (to merge at the end of odd pointer later)
+3. Loop till even != null && even.next != null
+4. 
+```
+
+```java
+if(head == null || head.next == null || head.next.next == null) return head;
+ListNode odd = head;
+ListNode even = head.next;
+ListNode evenHead = even; 
+while(even != null && even.next != null) 
+{
+    // Odd Nodes
+    odd.next = even.next;
+    odd = odd.next;
+    // Even Nodes
+    even.next = odd.next;
+    even = even.next;
+}
+odd.next = evenHead;
+return head;
+```
+
+### 9. Remove nth Node from Back (Medium)
+> [Link](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) - Leetcode 19
+
+```
+1. Find the length of the Linked List using getLength function
+2. If n == n then return head.next
+3. Use a temp pointer and go to the node who's position is before the traget delete node
+4. Adjust the next pointer and return the head
+```
+
+```java
+public int getLength(ListNode head)
+{
+    int cnt = 0;
+    ListNode temp = head;
+    while(temp != null) 
+    {
+        cnt++;
+        temp = temp.next;
+    }
+    return cnt;
+}
+public ListNode removeNthFromEnd(ListNode head, int n) 
+{
+    if(head == null) return null;
+    int len = getLength(head), pos = len - n, cnt = 0;
+    if(len == n) return head.next;
+    ListNode temp = head;
+    while(cnt != (pos-1))
+    {
+        temp = temp.next;
+        cnt++;
+    }
+    temp.next = temp.next.next;
+    return head;
+}
+```
+
+### 10. Remove the mid Node (Medium)
+> [Link](https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/) - Leetcode 2095
+
+```
+1. Use Fast and Slow pointer to find the mid-1 node
+2. Adjust the next pointer so we remove the mid node
+```
+
+```java
+if(head == null || head.next == null) return null;
+ListNode prev = null, slow = head, fast = head;
+while(fast != null)
+{
+    if(fast.next == null) break;
+    prev = slow;
+    slow = slow.next;
+    fast = fast.next.next;
+}   
+prev.next = prev.next.next;
+return head;
+```
+
+### 11. Sort Linked List (Hard)
+> [Link](https://leetcode.com/problems/sort-list/) - Leetcode 148
+
+```
+Pending
+```
+
+```java
+Pending
+```
+
+### 12. Sort a Linked List of 0, 1 and 2 (Medium)
+> [Link](https://takeuforward.org/plus/dsa/problems/sort-a-ll-of-0's-1's-and-2's)
+
+```
+1. Make three nodes to connect zero, one and two
+2. Use these pointer nodes to connect the respective node who's value is 0, 1 and 2
+3. Later connect the end of Linked List 0 -> Linked List 1 -> Linked List 2 and return the head
+```
+
+```java
+ListNode zero = new ListNode(), one = new ListNode(), two = new ListNode();
+
+zero.next = null;
+one.next = null;
+two.next = null;
+
+ListNode p1 = zero, p2 = one, p3 = two, temp = head;
+
+while(temp != null)
+{
+    if(temp.data == 0)
+    {
+        p1.next = temp;
+        p1 = p1.next;
+    }
+    else if(temp.data == 1)
+    {
+        p2.next = temp;
+        p2 = p2.next;
+    }
+    else 
+    {
+        p3.next = temp;
+        p3 = p3.next;
+    }
+    temp = temp.next;
+}
+
+two = two.next;
+p3.next = null;
+
+one = one.next;
+p2.next = two;
+
+zero = zero.next;
+p1.next = one;
+
+return zero;
+```
+
+### 13. Find the Intersection Point of Y Linked List (Easy)
+> [Link](https://leetcode.com/problems/intersection-of-two-linked-lists/) - Leetcode 169
+
+```
+1. Find the length of the both the Linked List
+2. Shift the Longest Linked List till the length of it matches the Smallest Linked List
+3. Check and Shift the both the heads both the Linked List if node reference is matched then there is Intersection
+```
+
+```java
+public int getLength(ListNode head)
+{
+    int cnt = 0;
+    while(head != null) { cnt++; head = head.next; }
+    return cnt;
+}
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) 
+{
+    ListNode p1 = headA, p2 = headB;
+    int n1 = getLength(p1), n2 = getLength(p2), diff = Math.abs(n1 - n2), pos1 = 1, pos2 = 1;
+    if(n1 > n2) while(diff-- > 0) p1 = p1.next;
+    else while(diff-- > 0) p2 = p2.next;
+    while(p1 != null && p2 != null) 
+    {
+        if(p1 == p2) return p1;
+        p1 = p1.next;
+        p2 = p2.next;
+    }
+    return null;
+}
+```
+
+### 14. Add one to a number represented as Linked List (Medium)
+> [Link](https://takeuforward.org/plus/dsa/problems/add-one-to-a-number-represented-by-ll)
+
+```
+1. Reverse the Linked List 
+2. Add one to the linked list value and check for carry and update the value of node after removing the carry
+3. Repeat the step 2 until we reach the end
+4. If carry present then add a new node at the end and return the reversed Linked List
+```
+
+```java
+public ListNode reverse(ListNode head)
+{
+    ListNode prev = null, curr = head, nxt = null;
+    while(curr != null)
+    {
+        nxt = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = nxt;
+    }
+    return prev;
+}
+public ListNode addOne(ListNode head) 
+{
+    if(head == null) return new ListNode(1);
+    ListNode temp = reverse(head);
+    int c = 0;
+    ListNode cpy = temp;
+    ListNode prev = null;
+    if(cpy.val == 9)
+    {
+        cpy.val = 0;
+        c = 1;
+    }
+    else cpy.val += 1;
+    prev = cpy;
+    cpy = cpy.next;
+    while(cpy != null)
+    {
+        cpy.val += c;
+        c = cpy.val / 10;
+        cpy.val %= 10;
+        prev = cpy;
+        cpy = cpy.next;
+    }
+    if(c > 0) prev.next = new ListNode(c);
+    return reverse(temp);
+}
+```
+
+### 15. Add Two Numbers (Medium)
+> [Link](https://leetcode.com/problems/add-two-numbers/) - Leetcode 2
+
+```
+1. Reverse both the Linked List and keep a cary variable c
+2. Add the values from both Linked List and carry also and handle the value and new carry after addition
+3. Shift the pointers and once of the Linked List reaches Null
+4. Add the left over carry to the Linked List who pointer is != Null and store the end pointer in result
+5. Later reverse the Linked List with result pointer and return it
+```
+
+```java
+public ListNode reverse(ListNode head)
+{
+    ListNode prev = null, curr = head, nxt = null;
+    while(curr != null)
+    {
+        nxt = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = nxt;
+    }
+    return prev;
+}
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) 
+{
+    l1 = reverse(l1);
+    l2 = reverse(l2);
+    ListNode c1 = l1, c2 = l2;
+    int c = 0;
+
+    while(c1 != null && c2 != null)
+    {
+        c1.val = c1.val + c2.val + c;
+        c = c1.val / 10;
+        c1.val = c1.val % 10;
+        c1 = c1.next;
+        c2 = c2.next;
+    }
+    ListNode result;
+    if(c1 != null)
+    {
+        result = l1;
+        while(c1 != null)
+        {
+            c1.val = c1.val + c;
+            c = c1.val / 10;
+            c1.val = c1.val % 10;
+            c1 = c1.next;
+        }
+        if(c > 0)
+        {
+            ListNode temp = l1;
+            while(temp.next != null) temp = temp.next;
+            temp.next = new ListNode(c);
+        }
+    }
+    else
+    {
+        result = l2;
+        while(c2 != null)
+        {
+            c2.val = c2.val + c;
+            c = c2.val / 10;
+            c2.val = c2.val % 10;
+            c2 = c2.next;
+        }
+        if(c > 0)
+        {
+            ListNode temp = l2;
+            while(temp.next != null) temp = temp.next;
+            temp.next = new ListNode(c);
+        }
+    }
+    return reverse(result);
+}
+```
+
+### 16. Delete all occurance of a Key in Doubly Linked List (Medium)
+> [Link](https://takeuforward.org/plus/dsa/problems/delete-all-occurrences-of-a-key-in-dll)
+
+```
+1. Make a new node so we can connect nodes who's value is not key
+2. Use Pointer p1 and p2 to skip all the node who's value == key
+3. Check for 
+```
+
+```java
+if(head == null) return head;
+ListNode newHead = new ListNode(Integer.MAX_VALUE);
+newHead.next = head;
+newHead.prev = null;
+head.prev = newHead;
+ListNode p1 = newHead, p2 = head;
+while(p2 != null)
+{
+    if(p2.val == target) 
+    {
+        while(p2 != null && p2.val == target) p2 = p2.next;
+        p1.next = p2;
+        if(p2 != null) p2.prev = p1;
+    }
+    else p1 = p2;
+    if(p2 != null) p2 = p2.next;
+}
+ListNode result = newHead.next;
+if(result != null) result.prev = null;
+return result;
+```
+
+### 17. Find Pairs with Given Sum in Doubly Linked List (Medium)
+> [Link](https://takeuforward.org/plus/dsa/problems/find-pairs-with-given-sum-in-doubly-linked-list)
+
+```
+1. Use two pointer approach since the Linked List is Sorted
+2. Add the values if more then target then shift the right pointer, if less then shift the left pointer
+3. Return the List with all the pairs who sum up to target value
+```
+
+```java
+if(head == null || head.next == null)
+{   
+    List<List<Integer>> res = new ArrayList<>();
+    return res;
+} 
+ListNode p1 = head, p2 = head;
+while(p2.next != null) p2 = p2.next;
+List<List<Integer>> res = new ArrayList<>();
+int sum = 0;
+while(p1 != p2 && p1.prev != p2)
+{
+    sum = p1.val + p2.val;
+    if(sum == target)
+    {
+        List<Integer> sub_res = new ArrayList<>();
+        sub_res.add(p1.val);
+        sub_res.add(p2.val);
+        res.add(sub_res);
+
+        p1 = p1.next;
+        p2 = p2.prev;
+    }
+    else if(sum > target) p2 = p2.prev;
+    else p1 = p1.next;
+}
+return res;
+```
+
+### 18. Remove duplicates from the Sorted Doubly Linked List (Medium)
+> [Link](https://takeuforward.org/plus/dsa/problems/remove-duplicated-from-sorted-dll)
+
+```
+1. Make new Node and attach it to the Linked List head
+2. Use pointer p1 and p2 and point them at newHead and skip all the duplicates till we reach a new node with different value
+3. Connect the p1 and p2 pointers with new value, and shift the pointer p1
+4. Handle the p2 when its Null and return the Linked List
+```
+
+```java
+if(head == null) return head;
+ListNode newHead = new ListNode(head.val);
+newHead.next = head;
+newHead.prev = null;
+head.prev = newHead;
+ListNode p1 = newHead, p2 = newHead;
+while(p2 != null)
+{
+    while(p2 != null && p2.val == p1.val) p2 = p2.next;
+    p1.next = p2;
+    if(p2 != null) p2.prev = p1;
+    p1 = p2;
+    if(p2 != null) p2 = p2.next;
+}
+return newHead;
+```
+
+### 20. Reverse Node in k groups (Hard)
+> [Link](https://leetcode.com/problems/reverse-nodes-in-k-group/) - Leetcode 25
+
+```
+1. Reverse Linked List logic using three pointers we should apply at group level
+2. Find the length of the Linked List and check if k is greater then 'n' if so return the head since we need not reverse if the group is less then k
+3. Make a dummy node and connect it with the head node
+4. Maintain prev, curr, nxt pointer and previousGrp = dummy, nextGrp = null, kth = null, oldGroupHead = null
+5. Use getKthNode function to get the kth node of the current group which we want to reverse (i.e., last node of the group)
+6. If kth node is null then the group size < k so break out of the loop
+7. If not next group starts after the kth node so keep track of it using the nextGrp pointer
+8. Old group head (i.e., the head of the current group which we are operating) so get this from the previousGrp.next
+9. Point the prev = nextGrp and curr = oldGroupHead (i.e., previousGrp.next)
+10. Now reverse the nodes in the current group using three pointer reverse logic, but loop till curr pointer != nextGrp pointer
+11. Once the reverse process is done we can link the previousGrp.next = kth pointer (since now kth pointer is new head of the reversed group)
+12. Assign the previousGrp = oldGroupHead since this is the end node of the current reversed group
+```
+
+```java
+public ListNode getKthNode(ListNode head, int k)
+{
+    ListNode temp = head;
+    while(temp != null && k > 0)
+    {
+        temp = temp.next;
+        k--;
+    }
+    return temp;
+}
+public ListNode reverseKGroup(ListNode head, int k) 
+{
+    if(head == null || k == 1) return head;
+    
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+
+    ListNode previousGrp = dummy, nextGrp = null, kth = null, oldGroupHead = null;
+    ListNode prev = null, curr = null, nxt = null;
+
+    while(true)
+    {
+        kth = getKthNode(previousGrp, k);
+        if(kth == null) break;
+
+        nextGrp = kth.next;
+        oldGroupHead = previousGrp.next; // Here we always get the head node of each group
+        prev = nextGrp;                  // Here we use prev pointer to point at next group so later when we reverse we can connect this to next group head
+        curr = previousGrp.next;
+
+        while(curr != nextGrp)
+        {
+            nxt = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+
+        previousGrp.next = kth;
+        previousGrp = oldGroupHead;      // Here we use the previousGrp as a dummy node, like how we used it in the start
+    }
+
+    return dummy.next;
+}
+```
+
+### 21. Rotate a Linked List (Hard)
+> [Link](https://leetcode.com/problems/rotate-list/) - Leetcode 61
+
+```
+1. Simple node connection change needs to be done to solve this question
+2. Find the length of the Linked List and if its smaller then k then update the k = k % n
+3. Traverse till we reach the node at (n - k - 1) position
+4. newHead is temp.next and and temp.next = null and then connect the end of the 2nd half to the 1st half and return the newHead
+```
+
+```java
+if(head == null || k <= 0) return head;
+int n = 0;
+ListNode temp = head;
+while(temp != null)
+{
+    temp = temp.next;
+    n++;
+}
+if(n == 1 || k % n == 0) return head;
+k = k % n;
+temp = head;
+int cnt = n - k;
+while(cnt > 1)
+{
+    temp = temp.next;
+    cnt--;
+}
+ListNode newHead = temp.next;
+temp.next = null;
+temp = newHead;
+while(temp.next != null) temp = temp.next;
+temp.next = head;
+return newHead;
+```
+
+### 22. Flattening of Linked List (Hard)
+> [Link](https://takeuforward.org/plus/dsa/problems/flattening-of-ll)
+
+```
+1. Outerloop traverse using the next pointer for main Linked List
+2. Check the child pointer for main Linked List and if children exists then in Innerloop
+3. Traverse till we reach last node in this children branch and connect this to main branch next node
+4. If there are no children node then connect the main branch to next node in main branch
+5. Once the Linked List is flattened sort using count sort
+```
+
+```java
+public void LinkedListSort(ListNode head) 
+{
+    ListNode temp = head;
+    int map[] = new int[1001];
+    while(temp != null) 
+    {
+        map[temp.val]++;
+        temp.next = null;
+        temp = temp.child;
+    }
+    temp = head;
+    for(int i=0; i<=1000; i++) 
+    {
+        while(map[i] > 0) 
+        {
+            temp.val = i;
+            temp = temp.child;
+            map[i]--;
+        }
+    }
+}
+public ListNode flattenLinkedList(ListNode head) 
+{
+    if(head == null) return null;
+    ListNode temp = head;
+    while(temp != null) 
+    {
+        ListNode tc = temp.child;
+        if(tc == null) temp.child = temp.next;
+        else 
+        {
+            while(tc.child != null) tc = tc.child;
+            tc.child = temp.next;
+        }
+        temp = temp.next;
+    }
+    LinkedListSort(head);
+    return head;
+}
 ```
